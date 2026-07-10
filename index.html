@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet">
 
   <script>
-    // Tailwind Config Customization to match our elegant Morandi design
+    // Tailwind Config Customization to exactly match our React UI
     tailwind.config = {
       theme: {
         extend: {
@@ -186,7 +186,7 @@
     }
   </style>
 </head>
-<body class="watercolor-canvas-bg min-h-screen text-text-dark-gray font-sans leading-relaxed pb-24 relative overflow-x-hidden select-text">
+<body class="watercolor-canvas-bg min-h-screen text-text-dark-gray font-sans leading-relaxed pb-24 relative overflow-hidden select-text">
 
   <div id="app" v-cloak class="relative z-10">
     
@@ -249,7 +249,7 @@
         <!-- Right half: Medical Vector Illustration -->
         <div class="md:col-span-5 flex justify-center items-center relative z-10">
           <div class="w-full max-w-[290px] md:max-w-none aspect-[3/4] rounded-2xl bg-gradient-to-tr from-wc-blue-wash/30 to-wc-pink-wash/30 p-3 border border-border-brown-light/50 shadow-xs relative overflow-hidden group">
-            <div class="absolute inset-0 bg-white/10 backdrop-blur-xs z-0"></div>
+            <div class="absolute inset-0 bg-white/10 backdrop-blur-xs z-0" />
             
             <!-- MASTER VECTOR ILLUSTRATION: HIGH-FIDELITY WATERCOLOR UTERUS -->
             <svg id="watercolor-uterus-illustration" viewBox="0 0 600 780" class="w-full h-full select-none pointer-events-none relative z-10 transition-transform duration-700 group-hover:scale-[1.03]" xmlns="http://www.w3.org/2000/svg">
@@ -263,46 +263,46 @@
                   <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" xChannelSelector="R" yChannelSelector="G" />
                 </filter>
                 <radialGradient id="pinkWatercolorWash" cx="35%" cy="30%" r="65%">
-                  <stop offset="0%" stop-color="#FFF2F4" stop-opacity="1" />
-                  <stop offset="45%" stop-color="#FCDCE2" stop-opacity="0.85" />
-                  <stop offset="80%" stop-color="#FAADB9" stop-opacity="0.4" />
-                  <stop offset="100%" stop-color="#FCDCE2" stop-opacity="0" />
+                  <stop offset="0%" stopColor="#FFF2F4" stopOpacity="1" />
+                  <stop offset="45%" stopColor="#FCDCE2" stopOpacity="0.85" />
+                  <stop offset="80%" stopColor="#FAADB9" stopOpacity="0.4" />
+                  <stop offset="100%" stopColor="#FCDCE2" stopOpacity="0" />
                 </radialGradient>
                 <radialGradient id="blueWatercolorWash" cx="65%" cy="75%" r="65%">
-                  <stop offset="0%" stop-color="#ECF4F8" stop-opacity="1" />
-                  <stop offset="50%" stop-color="#D2E2EE" stop-opacity="0.85" />
-                  <stop offset="85%" stop-color="#A9C7DD" stop-opacity="0.4" />
-                  <stop offset="100%" stop-color="#D2E2EE" stop-opacity="0" />
+                  <stop offset="0%" stopColor="#ECF4F8" stopOpacity="1" />
+                  <stop offset="50%" stopColor="#D2E2EE" stopOpacity="0.85" />
+                  <stop offset="85%" stopColor="#A9C7DD" stopOpacity="0.4" />
+                  <stop offset="100%" stopColor="#D2E2EE" stopOpacity="0" />
                 </radialGradient>
                 <linearGradient id="uterusMuscle" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="#F59FA3" />
-                  <stop offset="50%" stop-color="#E36C72" />
-                  <stop offset="100%" stop-color="#C9444A" />
+                  <stop offset="0%" stopColor="#F59FA3" />
+                  <stop offset="50%" stopColor="#E36C72" />
+                  <stop offset="100%" stopColor="#C9444A" />
                 </linearGradient>
                 <linearGradient id="endometriumLining" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="#FFF2F3" />
-                  <stop offset="40%" stop-color="#FCAEA2" />
-                  <stop offset="100%" stop-color="#F07F85" />
+                  <stop offset="0%" stopColor="#FFF2F3" />
+                  <stop offset="40%" stopColor="#FCAEA2" />
+                  <stop offset="100%" stopColor="#F07F85" />
                 </linearGradient>
                 <radialGradient id="ovaryTissue" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#FFFFFF" />
-                  <stop offset="65%" stop-color="#FDF0EC" />
-                  <stop offset="100%" stop-color="#E6CEC7" />
+                  <stop offset="0%" stopColor="#FFFFFF" />
+                  <stop offset="65%" stopColor="#FDF0EC" />
+                  <stop offset="100%" stopColor="#E6CEC7" />
                 </radialGradient>
                 <radialGradient id="follicleGlow" cx="35%" cy="35%" r="65%">
-                  <stop offset="0%" stop-color="#FFFFFC" />
-                  <stop offset="35%" stop-color="#FFF9C4" />
-                  <stop offset="80%" stop-color="#FCD34D" />
-                  <stop offset="100%" stop-color="#D97706" />
+                  <stop offset="0%" stopColor="#FFFFFC" />
+                  <stop offset="35%" stopColor="#FFF9C4" />
+                  <stop offset="80%" stopColor="#FCD34D" />
+                  <stop offset="100%" stopColor="#D97706" />
                 </radialGradient>
                 <linearGradient id="sproutGreen" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#E4F5E6" />
-                  <stop offset="50%" stop-color="#A3D9A5" />
-                  <stop offset="100%" stop-color="#589A6A" />
+                  <stop offset="0%" stopColor="#E4F5E6" />
+                  <stop offset="50%" stopColor="#A3D9A5" />
+                  <stop offset="100%" stopColor="#589A6A" />
                 </linearGradient>
                 <linearGradient id="watercolorStroke" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#8C6F67" stop-opacity="0.4" />
-                  <stop offset="100%" stop-color="#5C1E21" stop-opacity="0.55" />
+                  <stop offset="0%" stopColor="#8C6F67" stopOpacity="0.4" />
+                  <stop offset="100%" stopColor="#5C1E21" stopOpacity="0.55" />
                 </linearGradient>
               </defs>
 
@@ -311,111 +311,111 @@
                 <path d="M 50,80 Q 200,30 380,90 T 550,220 Q 580,380 440,480 T 150,420 Q 20,280 50,80 Z" fill="url(#pinkWatercolorWash)" />
                 <path d="M 220,380 Q 420,300 520,440 T 540,680 Q 380,760 210,710 T 80,510 Q 120,410 220,380 Z" fill="url(#blueWatercolorWash)" />
                 <path d="M 30,420 Q 120,380 180,440 T 120,580 Q 20,540 30,420 Z" fill="#E4F3E6" opacity="0.55" />
-                <path d="M 70,110 Q 190,65 360,115 T 510,240 Q 535,370 415,460 T 170,400 Q 50,290 70,110 Z" fill="none" stroke="#F4B8C5" stroke-width="1.2" stroke-dasharray="300, 5, 120, 4, 340, 6" opacity="0.5" />
-                <path d="M 235,395 Q 405,325 495,455 T 515,655 Q 375,725 225,680 T 105,520 Q 140,430 235,395 Z" fill="none" stroke="#A9C2D6" stroke-width="1.2" stroke-dasharray="250, 4, 180, 5, 290, 3" opacity="0.55" />
+                <path d="M 70,110 Q 190,65 360,115 T 510,240 Q 535,370 415,460 T 170,400 Q 50,290 70,110 Z" fill="none" stroke="#F4B8C5" strokeWidth="1.2" strokeDasharray="300, 5, 120, 4, 340, 6" opacity="0.5" />
+                <path d="M 235,395 Q 405,325 495,455 T 515,655 Q 375,725 225,680 T 105,520 Q 140,430 235,395 Z" fill="none" stroke="#A9C2D6" strokeWidth="1.2" strokeDasharray="250, 4, 180, 5, 290, 3" opacity="0.55" />
               </g>
 
-              <!-- 2. HEALING HANDS CRADLING THE ANATOMY -->
+              <!-- 2. HANDS CRADLING THE ANATOMY -->
               <g id="healing-hands-watercolor" filter="url(#softGlow)" opacity="0.92">
-                <path d="M 120,780 C 135,660 160,590 110,480 C 85,420 90,340 135,310 C 170,285 190,320 205,385 C 215,425 225,475 245,465 C 260,455 255,380 252,325 C 248,285 268,275 282,310 C 292,335 298,395 298,465 L 294,780 Z" fill="#FAF0E6" stroke="url(#watercolorStroke)" stroke-width="1.5" stroke-linejoin="round" />
-                <path d="M 480,780 C 465,660 440,590 490,480 C 515,420 510,340 465,310 C 430,285 410,320 395,385 C 385,425 375,475 355,465 C 340,455 345,380 348,325 C 352,285 332,275 318,310 C 308,335 302,395 302,465 L 306,780 Z" fill="#FAF0E6" stroke="url(#watercolorStroke)" stroke-width="1.5" stroke-linejoin="round" />
+                <path d="M 120,780 C 135,660 160,590 110,480 C 85,420 90,340 135,310 C 170,285 190,320 205,385 C 215,425 225,475 245,465 C 260,455 255,380 252,325 C 248,285 268,275 282,310 C 292,335 298,395 298,465 L 294,780 Z" fill="#FAF0E6" stroke="url(#watercolorStroke)" strokeWidth="1.5" strokeLinejoin="round" />
+                <path d="M 480,780 C 465,660 440,590 490,480 C 515,420 510,340 465,310 C 430,285 410,320 395,385 C 385,425 375,475 355,465 C 340,455 345,380 348,325 C 352,285 332,275 318,310 C 308,335 302,395 302,465 L 306,780 Z" fill="#FAF0E6" stroke="url(#watercolorStroke)" strokeWidth="1.5" strokeLinejoin="round" />
               </g>
 
               <!-- 3. MEDICAL ANATOMY SECTION -->
               <g id="medically-detailed-anatomy" transform="translate(0, -20)">
                 <!-- Vagina Outer & Inner -->
-                <path d="M 270,555 C 270,620 260,635 275,670 L 325,670 C 340,635 330,620 330,555 Z" fill="#EFA2A5" stroke="#C9444A" stroke-width="1.5" opacity="0.8" />
-                <path d="M 280,590 Q 300,595 320,590 M 275,615 Q 300,622 325,615 M 282,640 Q 300,643 318,640" fill="none" stroke="#E07075" stroke-width="1.5" opacity="0.7" stroke-linecap="round" />
+                <path d="M 270,555 C 270,620 260,635 275,670 L 325,670 C 340,635 330,620 330,555 Z" fill="#EFA2A5" stroke="#C9444A" strokeWidth="1.5" opacity="0.8" />
+                <path d="M 280,590 Q 300,595 320,590 M 275,615 Q 300,622 325,615 M 282,640 Q 300,643 318,640" fill="none" stroke="#E07075" strokeWidth="1.5" opacity="0.7" strokeLinecap="round" />
 
                 <!-- Cervix -->
-                <path d="M 265,540 Q 300,565 335,540 Q 345,560 315,560 L 285,560 Z" fill="#E57D81" stroke="#C9444A" stroke-width="1" />
-                <path d="M 296,515 L 296,550 A 4,4 0 0,0 304,550 L 304,515 Z" fill="#FFF2F3" stroke="#C9444A" stroke-width="1" />
+                <path d="M 265,540 Q 300,565 335,540 Q 345,560 315,560 L 285,560 Z" fill="#E57D81" stroke="#C9444A" strokeWidth="1" />
+                <path d="M 296,515 L 296,550 A 4,4 0 0,0 304,550 L 304,515 Z" fill="#FFF2F3" stroke="#C9444A" strokeWidth="1" />
                 
                 <!-- Myometrium (Uterus wall) -->
-                <path d="M 300,345 C 215,345 220,440 255,515 L 265,540 Q 300,565 335,540 L 345,515 C 380,440 385,345 300,345 Z" fill="url(#uterusMuscle)" stroke="#A6282E" stroke-width="1.8" />
+                <path d="M 300,345 C 215,345 220,440 255,515 L 265,540 Q 300,565 335,540 L 345,515 C 380,440 385,345 300,345 Z" fill="url(#uterusMuscle)" stroke="#A6282E" strokeWidth="1.8" />
 
                 <!-- Endometrium lining -->
-                <path d="M 300,380 C 265,395 260,455 285,515 L 315,515 C 340,455 335,395 300,380 Z" fill="url(#endometriumLining)" stroke="#E36C72" stroke-width="1" />
-                <path d="M 275,410 Q 290,412 285,425 M 325,410 Q 310,412 315,425 M 270,445 Q 295,448 290,465" fill="none" stroke="#D3565C" stroke-width="1" opacity="0.6" stroke-linecap="round" />
+                <path d="M 300,380 C 265,395 260,455 285,515 L 315,515 C 340,455 335,395 300,380 Z" fill="url(#endometriumLining)" stroke="#E36C72" strokeWidth="1" />
+                <path d="M 275,410 Q 290,412 285,425 M 325,410 Q 310,412 315,425 M 270,445 Q 295,448 290,465" fill="none" stroke="#D3565C" strokeWidth="1" opacity="0.6" strokeLinecap="round" />
 
                 <!-- Fallopian Tubes -->
-                <path d="M 245,372 C 190,365 160,340 135,370 C 115,395 125,415 130,422" fill="none" stroke="url(#uterusMuscle)" stroke-width="8.5" stroke-linecap="round" />
-                <path d="M 245,372 C 190,365 160,340 135,370 T 130,422" fill="none" stroke="#A6282E" stroke-width="1.5" />
+                <path d="M 245,372 C 190,365 160,340 135,370 C 115,395 125,415 130,422" fill="none" stroke="url(#uterusMuscle)" strokeWidth="8.5" strokeLinecap="round" />
+                <path d="M 245,372 C 190,365 160,340 135,370 T 130,422" fill="none" stroke="#A6282E" strokeWidth="1.5" />
                 
-                <path d="M 355,372 C 410,365 440,340 465,370 C 485,395 475,415 470,422" fill="none" stroke="url(#uterusMuscle)" stroke-width="8.5" stroke-linecap="round" />
-                <path d="M 355,372 C 410,365 440,340 465,370 T 470,422" fill="none" stroke="#A6282E" stroke-width="1.5" />
-                
+                <path d="M 355,372 C 410,365 440,340 465,370 C 485,395 475,415 470,422" fill="none" stroke="url(#uterusMuscle)" strokeWidth="8.5" strokeLinecap="round" />
+                <path d="M 355,372 C 410,365 440,340 465,370 T 470,422" fill="none" stroke="#A6282E" strokeWidth="1.5" />
+
                 <!-- Left Fimbriae -->
                 <g transform="translate(130, 422)">
-                  <path d="M -8,-5 Q -15,5 -18,18 Q -10,12 -3,15 Q -4,22 5,20 Q 2,12 8,10 Q 12,5 4,-2 Q 0,-12 -8,-5 Z" fill="#D6585E" stroke="#A6282E" stroke-width="1.2" />
+                  <path d="M -8,-5 Q -15,5 -18,18 Q -10,12 -3,15 Q -4,22 5,20 Q 2,12 8,10 Q 12,5 4,-2 Q 0,-12 -8,-5 Z" fill="#D6585E" stroke="#A6282E" strokeWidth="1.2" />
                 </g>
                 <!-- Right Fimbriae -->
                 <g transform="translate(470, 422)">
-                  <path d="M 8,-5 Q 15,5 18,18 Q 10,12 3,15 Q 4,22 -5,20 Q -2,12 -8,10 Q -12,5 -4,-2 Q 0,-12 8,-5 Z" fill="#D6585E" stroke="#A6282E" stroke-width="1.2" />
+                  <path d="M 8,-5 Q 15,5 18,18 Q 10,12 3,15 Q 4,22 -5,20 Q -2,12 -8,10 Q -12,5 -4,-2 Q 0,-12 8,-5 Z" fill="#D6585E" stroke="#A6282E" strokeWidth="1.2" />
                 </g>
 
                 <!-- Left Ovary: NORMAL (one dominant mature follicle) -->
                 <g>
-                  <ellipse cx="160" cy="455" rx="36" ry="24" transform="rotate(-15, 160, 455)" fill="url(#ovaryTissue)" stroke="#C7B2AD" stroke-width="1.5" />
-                  <circle cx="168" cy="445" r="10" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="1" />
-                  <circle cx="140" cy="452" r="4" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.5" />
-                  <rect x="110" y="492" width="100" height="18" rx="6" fill="#E4F3E6" stroke="#589A6A" stroke-width="0.5" />
-                  <text x="160" y="504" text-anchor="middle" fill="#2E5238" font-size="9" font-weight="bold">正常卵巢: 优势成熟</text>
+                  <ellipse cx="160" cy="455" rx="36" ry="24" transform="rotate(-15, 160, 455)" fill="url(#ovaryTissue)" stroke="#C7B2AD" strokeWidth="1.5" />
+                  <circle cx="168" cy="445" r="10" fill="url(#follicleGlow)" stroke="#FFF" strokeWidth="1" />
+                  <circle cx="140" cy="452" r="4" fill="url(#follicleGlow)" stroke="#FFF" strokeWidth="0.5" />
+                  <rect x="110" y="492" width="76" height="18" rx="6" fill="#E4F3E6" stroke="#589A6A" strokeWidth="0.5" />
+                  <text x="148" y="504" text-anchor="middle" fill="#2E5238" font-size="9" font-weight="bold">正常卵巢: 优势成熟</text>
                 </g>
 
                 <!-- Right Ovary: PCOS (Multiple small follicles - string of pearls) -->
                 <g>
-                  <ellipse cx="440" cy="455" rx="42" ry="27" transform="rotate(15, 440, 455)" fill="url(#ovaryTissue)" stroke="#C7B2AD" stroke-width="1.5" />
+                  <ellipse cx="440" cy="455" rx="42" ry="27" transform="rotate(15, 440, 455)" fill="url(#ovaryTissue)" stroke="#C7B2AD" strokeWidth="1.5" />
                   <!-- Pearls -->
-                  <circle cx="415" cy="445" r="4.5" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
-                  <circle cx="422" cy="438" r="4" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
-                  <circle cx="434" cy="434" r="4.5" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
-                  <circle cx="448" cy="435" r="4" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
-                  <circle cx="460" cy="440" r="4" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
-                  <circle cx="466" cy="450" r="4.5" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
-                  <circle cx="464" cy="462" r="4" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
-                  <circle cx="454" cy="470" r="4.2" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
-                  <circle cx="442" cy="473" r="4" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
-                  <circle cx="428" cy="470" r="4.5" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
-                  <circle cx="418" cy="458" r="4.2" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
+                  <circle cx="415" cy="445" r="4.5" fill="url(#follicleGlow)" stroke="#FFF" strokeWidth="0.6" />
+                  <circle cx="422" cy="438" r="4" fill="url(#follicleGlow)" stroke="#FFF" strokeWidth="0.6" />
+                  <circle cx="434" cy="434" r="4.5" fill="url(#follicleGlow)" stroke="#FFF" strokeWidth="0.6" />
+                  <circle cx="448" cy="435" r="4" fill="url(#follicleGlow)" stroke="#FFF" strokeWidth="0.6" />
+                  <circle cx="460" cy="440" r="4" fill="url(#follicleGlow)" stroke="#FFF" strokeWidth="0.6" />
+                  <circle cx="466" cy="450" r="4.5" fill="url(#follicleGlow)" stroke="#FFF" strokeWidth="0.6" />
+                  <circle cx="464" cy="462" r="4" fill="url(#follicleGlow)" stroke="#FFF" strokeWidth="0.6" />
+                  <circle cx="454" cy="470" r="4.2" fill="url(#follicleGlow)" stroke="#FFF" strokeWidth="0.6" />
+                  <circle cx="442" cy="473" r="4" fill="url(#follicleGlow)" stroke="#FFF" strokeWidth="0.6" />
+                  <circle cx="428" cy="470" r="4.5" fill="url(#follicleGlow)" stroke="#FFF" strokeWidth="0.6" />
+                  <circle cx="418" cy="458" r="4.2" fill="url(#follicleGlow)" stroke="#FFF" strokeWidth="0.6" />
                   
-                  <rect x="390" y="492" width="100" height="18" rx="6" fill="#FFF0F2" stroke="#FAADB9" stroke-width="0.5" />
+                  <rect x="402" y="492" width="76" height="18" rx="6" fill="#FFF0F2" stroke="#FAADB9" strokeWidth="0.5" />
                   <text x="440" y="504" text-anchor="middle" fill="#8A252E" font-size="9" font-weight="bold">多囊卵巢: 珠链小卵泡</text>
                 </g>
 
                 <!-- Ligaments -->
-                <path d="M 194,445 Q 220,435 250,422" fill="none" stroke="#D38A8E" stroke-width="3" opacity="0.5" />
-                <path d="M 406,445 Q 380,435 350,422" fill="none" stroke="#D38A8E" stroke-width="3" opacity="0.5" />
+                <path d="M 194,445 Q 220,435 250,422" fill="none" stroke="#D38A8E" strokeWidth="3" opacity="0.5" />
+                <path d="M 406,445 Q 380,435 350,422" fill="none" stroke="#D38A8E" strokeWidth="3" opacity="0.5" />
               </g>
 
               <!-- 4. GENTLE FLORAL EMBELLISHMENTS -->
               <g id="sprout-floral-decor" filter="url(#softGlow)">
-                <path d="M 160,650 Q 110,630 140,560" fill="none" stroke="#589A6A" stroke-width="1.5" />
-                <path d="M 140,560 Q 155,550 160,540 Q 150,565 140,560" fill="url(#sproutGreen)" stroke="#4A8259" stroke-width="0.8" />
-                <path d="M 120,600 Q 100,595 95,585 Q 115,595 120,600" fill="url(#sproutGreen)" stroke="#4A8259" stroke-width="0.8" />
+                <path d="M 160,650 Q 110,630 140,560" fill="none" stroke="#589A6A" strokeWidth="1.5" />
+                <path d="M 140,560 Q 155,550 160,540 Q 150,565 140,560" fill="url(#sproutGreen)" stroke="#4A8259" strokeWidth="0.8" />
+                <path d="M 120,600 Q 100,595 95,585 Q 115,595 120,600" fill="url(#sproutGreen)" stroke="#4A8259" strokeWidth="0.8" />
                 
                 <g transform="translate(145, 630)">
                   <circle cx="0" cy="0" r="14" fill="#5C1E21" opacity="0.06" />
-                  <path d="M 0,-14 C 5,-10 12,-12 12,-5 C 12,2 5,0 12,10 C 5,8 0,14 0,14 C -5,14 0,8 -12,10 C -5,0 -12,2 -12,-5 C -12,-12 -5,-10 0,-14 Z" fill="#FFF" stroke="#E5D9D1" stroke-width="0.8" />
+                  <path d="M 0,-14 C 5,-10 12,-12 12,-5 C 12,2 5,0 12,10 C 5,8 0,14 0,14 C -5,14 0,8 -12,10 C -5,0 -12,2 -12,-5 C -12,-12 -5,-10 0,-14 Z" fill="#FFF" stroke="#E5D9D1" strokeWidth="0.8" />
                   <circle cx="0" cy="0" r="4" fill="#FCD34D" />
                 </g>
 
-                <path d="M 440,650 Q 490,630 460,560" fill="none" stroke="#589A6A" stroke-width="1.5" />
-                <path d="M 460,560 Q 445,550 440,540 Q 450,565 460,560" fill="url(#sproutGreen)" stroke="#4A8259" stroke-width="0.8" />
+                <path d="M 440,650 Q 490,630 460,560" fill="none" stroke="#589A6A" strokeWidth="1.5" />
+                <path d="M 460,560 Q 445,550 440,540 Q 450,565 460,560" fill="url(#sproutGreen)" stroke="#4A8259" strokeWidth="0.8" />
                 
                 <g transform="translate(455, 630)">
                   <circle cx="0" cy="0" r="14" fill="#5C1E21" opacity="0.06" />
-                  <path d="M 0,-14 C 5,-10 12,-12 12,-5 C 12,2 5,0 12,10 C 5,8 0,14 0,14 C -5,14 0,8 -12,10 C -5,0 -12,2 -12,-5 C -12,-12 -5,-10 0,-14 Z" fill="#FFF" stroke="#E5D9D1" stroke-width="0.8" />
+                  <path d="M 0,-14 C 5,-10 12,-12 12,-5 C 12,2 5,0 12,10 C 5,8 0,14 0,14 C -5,14 0,8 -12,10 C -5,0 -12,2 -12,-5 C -12,-12 -5,-10 0,-14 Z" fill="#FFF" stroke="#E5D9D1" strokeWidth="0.8" />
                   <circle cx="0" cy="0" r="4" fill="#FCD34D" />
                 </g>
               </g>
 
               <!-- 5. GLOWING ACCENT BUBBLES -->
               <g opacity="0.75" filter="url(#softGlow)">
-                <circle cx="390" cy="275" r="12" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.8" />
-                <circle cx="410" cy="305" r="8" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.8" />
-                <circle cx="445" cy="285" r="15" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="1" />
-                <circle cx="180" cy="290" r="10" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.8" />
+                <circle cx="390" cy="275" r="12" fill="url(#follicleGlow)" stroke="#FFF" strokeWidth="0.8" />
+                <circle cx="410" cy="305" r="8" fill="url(#follicleGlow)" stroke="#FFF" strokeWidth="0.8" />
+                <circle cx="445" cy="285" r="15" fill="url(#follicleGlow)" stroke="#FFF" strokeWidth="1" />
+                <circle cx="180" cy="290" r="10" fill="url(#follicleGlow)" stroke="#FFF" strokeWidth="0.8" />
               </g>
             </svg>
           </div>
@@ -458,15 +458,31 @@
               <p class="text-sm font-medium text-gray-700">您当前最急切改善或关注的主要症状与调理目标是：</p>
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <button 
-                  v-for="opt in concernOptions" 
-                  :key="opt.value"
-                  @click="answers.concern = opt.value; nextStep()"
-                  class="p-4 rounded-xl border text-left text-xs transition-all relative flex flex-col justify-between h-28 cursor-pointer"
-                  :class="[answers.concern === opt.value ? 'bg-wc-pink-light border-wc-pink-deep text-text-brownRed ring-1 ring-wc-pink-deep' : 'bg-white border-gray-200 hover:border-wc-pink-deep/50 text-gray-600']"
+                  @click="answers.concern = '月经紊乱 / 高雄激素（多毛、痤疮、脱发）'; nextStep()"
+                  class="p-4 rounded-xl border text-left text-xs transition-all relative flex flex-col justify-between h-28 cursor-pointer animate-fade-in"
+                  :class="[answers.concern === '月经紊乱 / 高雄激素（多毛、痤疮、脱发）' ? 'bg-wc-pink-light border-wc-pink-deep text-text-brownRed ring-1 ring-wc-pink-deep' : 'bg-white border-gray-200 hover:border-wc-pink-deep/50 text-gray-600']"
                 >
-                  <span class="font-bold block text-sm mb-1">{{ opt.label }}</span>
-                  <span class="text-[11px] text-gray-500 leading-relaxed">{{ opt.desc }}</span>
-                  <span v-if="answers.concern === opt.value" class="absolute bottom-2 right-2 text-wc-pink-deep">✔</span>
+                  <span class="font-bold block text-sm mb-1">月经不调与多毛痤疮</span>
+                  <span class="text-[11px] text-gray-500 leading-relaxed">经期延迟、稀发、闭经、或伴随顽固下颌痤疮、身体粗硬多毛、脱发</span>
+                  <span v-if="answers.concern === '月经紊乱 / 高雄激素（多毛、痤疮、脱发）'" class="absolute bottom-2 right-2 text-wc-pink-deep">✔</span>
+                </button>
+                <button 
+                  @click="answers.concern = '正在备孕，渴望健康的宝宝'; nextStep()"
+                  class="p-4 rounded-xl border text-left text-xs transition-all relative flex flex-col justify-between h-28 cursor-pointer animate-fade-in"
+                  :class="[answers.concern === '正在备孕，渴望健康的宝宝' ? 'bg-wc-pink-light border-wc-pink-deep text-text-brownRed ring-1 ring-wc-pink-deep' : 'bg-white border-gray-200 hover:border-wc-pink-deep/50 text-gray-600']"
+                >
+                  <span class="font-bold block text-sm mb-1">备孕受孕黄金期</span>
+                  <span class="text-[11px] text-gray-500 leading-relaxed">渴望自然快速受孕，急需扫除因多囊排卵滞阻造成的备孕瓶颈</span>
+                  <span v-if="answers.concern === '正在备孕，渴望健康的宝宝'" class="absolute bottom-2 right-2 text-wc-pink-deep">✔</span>
+                </button>
+                <button 
+                  @click="answers.concern = '担忧血糖升高、黑棘皮、长胖、暴食或未来慢病问题'; nextStep()"
+                  class="p-4 rounded-xl border text-left text-xs transition-all relative flex flex-col justify-between h-28 cursor-pointer animate-fade-in"
+                  :class="[answers.concern === '担忧血糖升高、黑棘皮、长胖、暴食或未来慢病问题' ? 'bg-wc-pink-light border-wc-pink-deep text-text-brownRed ring-1 ring-wc-pink-deep' : 'bg-white border-gray-200 hover:border-wc-pink-deep/50 text-gray-600']"
+                >
+                  <span class="font-bold block text-sm mb-1">血糖代谢与身形管理</span>
+                  <span class="text-[11px] text-gray-500 leading-relaxed">关注暴饮暴食、体重飙升、胰岛素敏感度崩塌、脖子及腋下黑棘皮等慢病调理</span>
+                  <span v-if="answers.concern === '担忧血糖升高、黑棘皮、长胖、暴食 or 未来慢病问题'" class="absolute bottom-2 right-2 text-wc-pink-deep">✔</span>
                 </button>
               </div>
             </div>
@@ -543,15 +559,22 @@
               
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <button 
-                  v-for="opt in glycemicOptions" 
-                  :key="opt.value"
-                  @click="answers.glycemic = opt.value; nextStep()"
+                  @click="answers.glycemic = '正常 (体检正常)'; nextStep()"
                   class="p-4 rounded-xl border text-left text-xs transition-all relative flex flex-col justify-between h-24 cursor-pointer"
-                  :class="[answers.glycemic === opt.value ? 'bg-wc-pink-light border-wc-pink-deep text-text-brownRed ring-1 ring-wc-pink-deep' : 'bg-white border-gray-200 hover:border-wc-pink-deep/50 text-gray-600']"
+                  :class="[answers.glycemic === '正常 (体检正常)' ? 'bg-wc-pink-light border-wc-pink-deep text-text-brownRed ring-1 ring-wc-pink-deep' : 'bg-white border-gray-200 hover:border-wc-pink-deep/50 text-gray-600']"
                 >
-                  <span class="font-bold block text-sm mb-1">{{ opt.label }}</span>
-                  <span class="text-[11px] text-gray-500 leading-relaxed">{{ opt.desc }}</span>
-                  <span v-if="answers.glycemic === opt.value" class="absolute bottom-2 right-2 text-wc-pink-deep">✔</span>
+                  <span class="font-bold block text-sm mb-1">正常血糖与胰岛功能</span>
+                  <span class="text-[11px] text-gray-500 leading-relaxed">空腹血糖、餐后两小时OGTT、胰岛素释放、糖化血红蛋白等体检指标皆平稳</span>
+                  <span v-if="answers.glycemic === '正常 (体检正常)'" class="absolute bottom-2 right-2 text-wc-pink-deep">✔</span>
+                </button>
+                <button 
+                  @click="answers.glycemic = '有异常 (确诊胰岛素抵抗/糖耐量异常/高血糖)'; nextStep()"
+                  class="p-4 rounded-xl border text-left text-xs transition-all relative flex flex-col justify-between h-24 cursor-pointer"
+                  :class="[answers.glycemic === '有异常 (确诊胰岛素抵抗/糖耐量异常/高血糖)' ? 'bg-wc-pink-light border-wc-pink-deep text-text-brownRed ring-1 ring-wc-pink-deep' : 'bg-white border-gray-200 hover:border-wc-pink-deep/50 text-gray-600']"
+                >
+                  <span class="font-bold block text-sm mb-1">有异常或胰岛素抵抗</span>
+                  <span class="text-[11px] text-gray-500 leading-relaxed">已被诊断为胰岛素抵抗(IR)、高胰岛素、糖耐量减低或轻度高血糖、出现黑棘皮</span>
+                  <span v-if="answers.glycemic === '有异常 (确诊胰岛素抵抗/糖耐量异常/高血糖)'" class="absolute bottom-2 right-2 text-wc-pink-deep">✔</span>
                 </button>
               </div>
             </div>
@@ -561,15 +584,22 @@
               <p class="text-sm font-medium text-gray-700">您近 6 个月内是否有积极的备孕受孕计划？</p>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <button 
-                  v-for="opt in pregnancyOptions" 
-                  :key="opt.value"
-                  @click="answers.pregnancy = opt.value; nextStep()"
+                  @click="answers.pregnancy = '无近期备孕计划'; nextStep()"
                   class="p-4 rounded-xl border text-left text-xs transition-all relative flex flex-col justify-between h-24 cursor-pointer"
-                  :class="[answers.pregnancy === opt.value ? 'bg-wc-pink-light border-wc-pink-deep text-text-brownRed ring-1 ring-wc-pink-deep' : 'bg-white border-gray-200 hover:border-wc-pink-deep/50 text-gray-600']"
+                  :class="[answers.pregnancy === '无近期备孕计划' ? 'bg-wc-pink-light border-wc-pink-deep text-text-brownRed ring-1 ring-wc-pink-deep' : 'bg-white border-gray-200 hover:border-wc-pink-deep/50 text-gray-600']"
                 >
-                  <span class="font-bold block text-sm mb-1">{{ opt.label }}</span>
-                  <span class="text-[11px] text-gray-500 leading-relaxed">{{ opt.desc }}</span>
-                  <span v-if="answers.pregnancy === opt.value" class="absolute bottom-2 right-2 text-wc-pink-deep">✔</span>
+                  <span class="font-bold block text-sm mb-1">无近期备孕战略</span>
+                  <span class="text-[11px] text-gray-500 leading-relaxed">未来6个月至1年内无计划生宝宝，首要任务是规律经期和抗高雄及身材调节</span>
+                  <span v-if="answers.pregnancy === '无近期备孕计划'" class="absolute bottom-2 right-2 text-wc-pink-deep">✔</span>
+                </button>
+                <button 
+                  @click="answers.pregnancy = '有近期备孕计划'; nextStep()"
+                  class="p-4 rounded-xl border text-left text-xs transition-all relative flex flex-col justify-between h-24 cursor-pointer"
+                  :class="[answers.pregnancy === '有近期备孕计划' ? 'bg-wc-pink-light border-wc-pink-deep text-text-brownRed ring-1 ring-wc-pink-deep' : 'bg-white border-gray-200 hover:border-wc-pink-deep/50 text-gray-600']"
+                >
+                  <span class="font-bold block text-sm mb-1">有积极近期的备孕大计</span>
+                  <span class="text-[11px] text-gray-500 leading-relaxed">未来1-6个月内急切备孕，首要调理目标是高效排卵、获得最强受精卵质量</span>
+                  <span v-if="answers.pregnancy === '有近期备孕计划'" class="absolute bottom-2 right-2 text-wc-pink-deep">✔</span>
                 </button>
               </div>
             </div>
@@ -786,7 +816,7 @@
       <!-- 5. CLINICAL EDUCATIONAL DICTIONARY POPUP (Modal-like card) -->
       <transition name="fade">
         <div v-if="termPopup" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs no-print">
-          <div class="bg-white rounded-2xl max-w-md w-full border border-border-brown-light shadow-xl p-6 relative overflow-hidden watercolor-stain-card">
+          <div class="bg-white rounded-2xl max-w-md w-full border border-border-brown-light shadow-xl p-6 relative overflow-hidden watercolor-stain-card animate-scale-up">
             <h3 class="text-lg font-serif font-bold text-text-brownRed mb-3 flex items-center gap-2">
               📖 医学小百科：{{ termPopup.title }}
             </h3>
@@ -883,7 +913,7 @@
           },
           {
             name: "二甲双胍辅助改善",
-            metaphor: "二甲双胍由于在此类‘无胰岛素抵抗证据者’身上获益相对有限，不作为首要任务。但如果您后续的生活方式调理遇到了顽固瓶颈，二甲双胍可以作为一个‘备用的新动力’被请出来，稍微帮您推一把能量代谢，使身体对热量的消耗效率稍有上升。"
+            metaphor: "二甲双胍由于在此类‘无胰岛素抵抗证据者’身上获益相对有限，不作为首要任务。但如果您后续的生活方式调理遇到了顽固瓶颈，二甲双胍可以作为一个‘备用的新动力’被请出来，稍微帮您推一把能量代谢，使身体对热量的消耗效率稍微上升。"
           }
         ],
         harmful: [
@@ -939,7 +969,7 @@
           },
           {
             name: "盲目因害怕“伤肝肾”而中途停用二甲双胍",
-            reason: "这是一个流传极广的谣言。二甲双胍不经过肝脏代谢，且在体内不产生复杂的副产物，完全是以最初的原始姿态通过肾脏完整过滤排泄，只要您肾功能正常，根本不伤肝肾，擅自停药会让您的血糖与雄激素指标瞬间反弹失控。"
+            reason: "这是一个流传极广的谣言。二甲双胍不经过肝脏代谢，且在体内不产生复杂的副产物，完全是以最初的原始姿态通过肾脏完整过滤排泄，只要您肾功能正常，根本不伤肝肾，擅擅自停药会让您的血糖与雄激素指标瞬间反弹失控。"
           }
         ]
       },
@@ -989,7 +1019,7 @@
         secondLine: [
           {
             name: "特定饮食结构调整 (非针对减重的增肌减脂营养)",
-            metaphor: "您绝对不能采用粗暴的空腹和节食！相反，您更需要的是‘加餐式高蛋白低碳水’和‘温柔的力量训练’。这就像是用结实健康的‘肌肉熔炉’去顶替原本虚飘飘 of 低脂肪存量，让肌肉自动帮忙吸纳排泄血糖，达到根源性改善胰岛素阻抗的目的。"
+            metaphor: "您绝对不能采用粗暴的空腹和节食！相反，您更需要的是‘加餐式高蛋白低碳水’和‘温柔的力量训练’。这就像是用结实健康的‘肌肉熔炉’去顶替原本虚飘飘的低脂肪存量，让肌肉自动帮忙吸纳排泄血糖，达到根源性改善胰岛素阻抗的目的。"
           },
           {
             name: "肌醇调理辅助",
@@ -1012,12 +1042,12 @@
         title: "生殖储备/促排型 (正常血糖+超重肥胖)",
         firstLine: [
           {
-            name: "生活方式干预 (孕前排卵的核物理基石)",
-            metaphor: "对于备孕肥胖妈妈，生活方式管理具有核能威力！科学减去原体重的 5%-10%，其效果胜过任何灵丹妙药——研究证实，仅靠温和健康的体脂减低，就能让高达 80% 的肥胖多囊患者‘自然恢复排卵、在没有促排药的帮助下怀孕’！这等于是给受孕的卵巢生态圈进行了一次雨水丰沛的‘春播大整理’。"
+            name: "生活方式干预 (科学减重 5%-10%)",
+            metaphor: "对于备孕肥胖妈妈，生活方式管理具有核能威力！科学减去原体重的 5%-10%，其效果胜过任何灵丹妙药——研究证实，仅靠温和健康的体脂减低，就能让高达 80% 的肥胖多囊患者‘自然恢复排卵、在没有促排药的帮助下怀孕’！这等于是给受孕的卵巢生态圈进行了一次油水充足的‘春播大整理’。"
           },
           {
             name: "来曲唑 (促排卵一线绝对金标准)",
-            metaphor: "来曲唑专为备孕妈妈精准打造的‘单动力排卵助推器’。它通过短暂不留痕迹地蒙住大脑感觉雌激素的雷达，刺激脑垂体产出高纯度的促卵泡素（FSH）。它的最大奇功是‘指派一名最优秀的单兵（单卵泡）出征’，极好地规避了怀上极度危险的双胞胎或多胞胎风险；且它对子宫内膜这块‘育儿土壤’的厚度毫无打压，深受专家推崇。"
+            metaphor: "来曲唑就像是为备孕妈妈精准打造的‘单动力排卵助推器’。它通过短暂不留痕迹地蒙住大脑感觉雌激素的雷达，刺激脑垂体产出高纯度的促卵泡素（FSH）。它的最大奇功是‘指派一名最优秀的单兵（单卵泡）出征’，极好地规避了怀上极度危险的双胞胎或多胞胎风险；且它对子宫内膜这块‘育儿土壤’的厚度毫无打压，深受专家推崇。"
           }
         ],
         secondLine: [
@@ -1037,7 +1067,7 @@
           },
           {
             name: "私自在网上找微商购买来曲唑、在家自行服用",
-            reason: "万分危险！促排卵是一门极其严密的临床艺术。如果没有通过超声实时‘看雷达’监测卵泡的大小 and 个数，擅自服药极易让卵巢极速肿大（OHSS），甚至数十个卵泡同时爆发导致卵巢破裂，危及生命。"
+            reason: "万分危险！促排卵是一门极其严密的临床艺术。如果没有通过超声实时‘看雷达’监测卵泡的大小和个数，擅自服药极易让卵巢极速肿大（OHSS），甚至数十个卵泡同时爆发导致卵巢破裂，危及生命。"
           }
         ]
       },
@@ -1047,7 +1077,7 @@
         firstLine: [
           {
             name: "生活方式干预 (控制血糖与重塑孕育温床)",
-            metaphor: "这是不得不做的黄金天条！在超重伴血糖異常的情况下，必须通过合理的饮食、控糖、运动将身体的恶劣高糖大环境清空排毒，否则受孕无异于把娇弱的种子撒在滚烫的开水里。"
+            metaphor: "这是不得不做的黄金天条！在超重伴血糖异常的情况下，必须通过合理的饮食、控糖、运动将身体的恶劣高糖大环境清空排毒，否则受孕无异于把娇弱的种子撒在滚烫的开水里。"
           },
           {
             name: "二甲双胍 (备孕期强烈推荐，可服用至怀孕早期)",
@@ -1095,7 +1125,7 @@
           },
           {
             name: "促性腺激素注射 (重组FSH/尿促)",
-            metaphor: "if 口服药均不奏效，促性腺激素注射作为外源性直喷养料，不拐弯抹角。由于此疗法劲头过大，医生必须通过超声像雷达一般精准监测卵泡个数，严防多胎或卵巢过度刺激。"
+            metaphor: "如果口服药均不奏效，促性腺激素注射作为外源性直喷养料，不拐弯抹角。由于此疗法劲头过大，医生必须通过超声像雷达一般精准监测卵泡个数，严防多胎或卵巢过度刺激。"
           }
         ],
         harmful: [
@@ -1119,7 +1149,7 @@
           },
           {
             name: "来曲唑 (一线促排大招)",
-            metaphor: "在二甲双胍和温抗糖餐将内里的细胞微坏境打理整洁之后，来曲唑出马，轻轻一下便能顺风顺水地促排出一枚具有强大生殖潜力的优质、圆润大卵泡。"
+            metaphor: "在二甲双胍和温抗糖餐将内里的细胞微环境打理整洁之后，来曲唑出马，轻轻一下便能顺风顺水地促排出一枚具有强大生殖潜力的优质、圆润大卵泡。"
           }
         ],
         secondLine: [
@@ -1153,7 +1183,7 @@
           },
           {
             name: "二甲双胍 (最大耐受剂量的一线主力卫士)",
-            metaphor: "在此类代谢警报高挂的类型中，二甲双胍是您最可信任的‘血糖搬运大队长’。它不仅是打开细胞大门把糖分烧掉的钥匙，它还有个大大的妙处：可以抑制您肚里小肠对葡萄糖的过度饥渴吸收，并防止肝脏在夜间偷偷熬糖排进血管，对肥胖控重 and 逆转胰岛素抵抗大有裨益。"
+            metaphor: "在此类代谢警报高挂的类型中，二甲双胍是您最可信任的‘血糖搬运大队长’。它不仅是打开细胞大门把糖分烧掉的钥匙，它还有个大大的妙处：可以抑制您肚里小肠对葡萄糖的过度饥渴吸收，并防止肝脏在夜间偷偷熬糖排进血管，对肥胖控重和逆转胰岛素抵抗大有裨益。"
           }
         ],
         secondLine: [
@@ -1395,7 +1425,7 @@
               if (w === '体重正常（标准或偏瘦）' && g === '有异常 (确诊胰岛素抵抗/糖耐量异常/高血糖)') return pcosDatabase["1.4"];
             }
             if (c === '正在备孕，渴望健康的宝宝') {
-              // Forced redirection since備孕 is selected
+              // Forced redirection since 备孕 is selected
               if (w === '超重或肥胖' && g === '正常 (体检正常)') return pcosDatabase["2.1"];
               if (w === '超重或肥胖' && g === '有异常 (确诊胰岛素抵抗/糖耐量异常/高血糖)') return pcosDatabase["2.2"];
               if (w === '体重正常（标准或偏瘦）' && g === '正常 (体检正常)') return pcosDatabase["2.3"];
@@ -1453,7 +1483,7 @@
           termPopup.value = clinicalDictionary[termId];
         };
 
-        // When goal redirects to active pregnancy plan, auto-update
+        // When goal redirects to active 备孕, auto-update the pregnancy plan to match
         watch(() => answers.value.concern, (newConcern) => {
           if (newConcern === '正在备孕，渴望健康的宝宝') {
             answers.value.pregnancy = '有近期备孕计划';
