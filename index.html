@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>多囊卵巢综合征 (PCOS) 循证临床分型诊疗辅助决策系统</title>
+  
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts - Inter, JetBrains Mono, Noto Serif SC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet">
+
+  <script>
+    // Tailwind Config Customization to match our elegant Morandi design
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+            serif: ['"Noto Serif SC"', 'Georgia', 'serif'],
+          },
+          colors: {
+            wc: {
+              pink: {
+                light: '#FDF5F6',
+                medium: '#FBDBE2',
+                deep: '#F2AFBD',
+                wash: '#FFF0F2',
+              },
+              blue: {
+                light: '#EBF3F8',
+                medium: '#CFDFED',
+                deep: '#A6C9E2',
+                wash: '#EAF1F8',
+              },
+              green: {
+                sprout: '#E4F3E6',
+                dark: '#589A6A',
+              },
+              cream: '#FAF6F0',
+              milk: '#FCFAF2',
+              brown: {
+                light: '#F5EFE9',
+              }
+            },
+            text: {
+              brownRed: '#5C1E21',
+              darkGray: '#3D3D3D',
+            },
+            border: {
+              brownLight: '#E2D7CC',
+              brownMedium: '#C4B19E',
+            },
+            highlight: {
+              yellow: '#FCF4C5',
+              yellowDark: '#FACC15',
+            }
+          },
+          boxShadow: {
+            'xs': '0 1px 2px rgba(92, 30, 33, 0.02)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Vue 3 Global CDN -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style type="text/css">
+    /* High-fidelity watercolor canvas splotches & paper texture */
+    .watercolor-canvas-bg {
+      background-color: #FAF6F0; /* Soft cream base */
+      background-image: 
+        radial-gradient(circle at 12% 15%, transparent 78%, rgba(242, 175, 189, 0.18) 80%, rgba(242, 175, 189, 0.05) 81%, transparent 84%),
+        radial-gradient(circle at 85% 72%, transparent 74%, rgba(166, 201, 226, 0.22) 76%, rgba(166, 201, 226, 0.07) 77%, transparent 81%),
+        radial-gradient(circle at 50% 88%, transparent 79%, rgba(228, 243, 230, 0.22) 81%, transparent 83%),
+        radial-gradient(circle at 25% 18%, rgba(253, 219, 226, 0.5) 0%, rgba(253, 219, 226, 0.1) 50%, transparent 75%),
+        radial-gradient(circle at 75% 78%, rgba(207, 223, 237, 0.55) 0%, rgba(207, 223, 237, 0.1) 55%, transparent 80%),
+        radial-gradient(circle at 50% 45%, rgba(228, 243, 230, 0.45) 0%, rgba(228, 243, 230, 0.08) 45%, transparent 70%),
+        /* Paper grain simulation */
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper-noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.045' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.85 0 0 0 0 0.82 0 0 0 0 0.78 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper-noise)'/%3E%3C/svg%3E");
+    }
+
+    /* Subtle water bleed shadows */
+    .text-watercolor-shadow {
+      text-shadow: 0 1px 2px rgba(92, 30, 33, 0.04), 0 4px 14px rgba(253, 244, 197, 0.35);
+    }
+
+    /* Hand-painted watercolor stain ring border overlays for cards */
+    .watercolor-stain-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .watercolor-stain-card::before {
+      content: "";
+      position: absolute;
+      top: -20%;
+      right: -20%;
+      width: 50%;
+      height: 50%;
+      border-radius: 50%;
+      border: 1px solid rgba(242, 175, 189, 0.28);
+      background: radial-gradient(circle, rgba(253, 240, 242, 0.2) 0%, transparent 80%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .watercolor-stain-card::after {
+      content: "";
+      position: absolute;
+      bottom: -25%;
+      left: -15%;
+      width: 45%;
+      height: 45%;
+      border-radius: 50%;
+      border: 1.2px solid rgba(166, 201, 226, 0.3);
+      background: radial-gradient(circle, rgba(235, 243, 248, 0.2) 0%, transparent 80%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Translucent colored content blocks */
+    .watercolor-box-pink {
+      background-color: rgba(253, 245, 246, 0.8);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(226, 215, 204, 0.75);
+      box-shadow: inset 0 0 12px rgba(242, 175, 189, 0.1), 0 2px 8px rgba(92, 30, 33, 0.01);
+    }
+
+    .watercolor-box-blue {
+      background-color: rgba(235, 243, 248, 0.8);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(226, 215, 204, 0.75);
+      box-shadow: inset 0 0 12px rgba(166, 201, 226, 0.12), 0 2px 8px rgba(92, 30, 33, 0.01);
+    }
+
+    .watercolor-box-green {
+      background-color: rgba(228, 243, 230, 0.78);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(226, 215, 204, 0.7);
+      box-shadow: inset 0 0 12px rgba(88, 154, 106, 0.08), 0 2px 8px rgba(92, 30, 33, 0.01);
+    }
+
+    .watercolor-box-yellow {
+      background-color: rgba(253, 245, 205, 0.82);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(226, 215, 204, 0.75);
+      box-shadow: inset 0 0 10px rgba(250, 204, 21, 0.12), 0 2px 6px rgba(92, 30, 33, 0.02);
+    }
+
+    /* Fade transition effects */
+    .fade-enter-active, .fade-leave-active {
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .fade-enter-from, .fade-leave-to {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    /* Printer optimizations */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        background-image: none !important;
+        color: #000000 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-full {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body class="watercolor-canvas-bg min-h-screen text-text-dark-gray font-sans leading-relaxed pb-24 relative overflow-x-hidden select-text">
+
+  <div id="app" v-cloak class="relative z-10">
+    
+    <!-- 1. Header Banner -->
+    <header class="max-w-6xl mx-auto px-4 pt-8 md:pt-12 pb-6 text-center relative z-20">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/70 border border-border-brown-light/60 backdrop-blur-md shadow-xs mb-4">
+        <span class="w-2 h-2 rounded-full bg-wc-green-dark animate-pulse"></span>
+        <span class="text-xs font-mono text-text-brownRed uppercase tracking-wider font-semibold">Evidence-Based PCOS Decision System v1.5</span>
+      </div>
+      
+      <h1 class="text-3xl md:text-5xl font-serif text-text-brownRed font-black tracking-tight mb-4 leading-tight text-watercolor-shadow">
+        多囊卵巢综合征 (PCOS)<br class="xs:block md:hidden"> 循证临床分型诊疗辅助决策系统
+      </h1>
+      
+      <p class="max-w-2xl mx-auto text-sm md:text-base text-gray-600 font-sans leading-relaxed px-2">
+        汇聚国际医学共识，突破传统“一刀切”治疗误区。通过 4 步评估，精准匹配专属的临床干预路径、
+        高保真隐喻药理释义与避坑防骗指南。
+      </p>
+    </header>
+
+    <!-- 2. Master App Layout Grid -->
+    <main class="max-w-6xl mx-auto px-4 grid grid-cols-1 gap-8 relative z-20">
+      
+      <!-- HERO ILLUSTRATION & CLINICAL INTRO CARD -->
+      <section class="bg-white/80 rounded-3xl border border-border-brown-light p-6 md:p-10 shadow-sm relative overflow-hidden grid grid-cols-1 md:grid-cols-12 gap-8 items-center watercolor-stain-card">
+        
+        <!-- Left half: Medical context -->
+        <div class="md:col-span-7 flex flex-col justify-center space-y-5 text-left relative z-10">
+          <div class="inline-block">
+            <span class="px-2.5 py-1 rounded-md bg-wc-pink-light border border-wc-pink-deep/35 text-[11px] font-bold text-text-brownRed uppercase tracking-wide">
+              医学科普与临床教辅
+            </span>
+          </div>
+          
+          <h2 class="text-2xl md:text-3xl font-serif font-bold text-text-brownRed tracking-tight">
+            听懂卵巢的“无声叹息”与“卵泡暗号”
+          </h2>
+          
+          <p class="text-sm text-gray-600 leading-relaxed">
+            多囊卵巢综合征（PCOS）并非单一的局部妇科疾病，而是高度涉及下丘脑-垂体-性腺轴（HPG轴）、胰岛素信号传导与全身性内分泌代谢失衡的复杂综合征。
+          </p>
+          
+          <p class="text-sm text-gray-600 leading-relaxed">
+            右图展示的医学解剖中，您能清晰地对比正常卵巢与多囊卵巢。在多囊状态下，数十个直径在 2-9mm 的微小卵泡堆积在卵巢边缘，如同“一串珍珠”，但由于雄激素高企或胰岛素抵抗，这些卵泡均无法发育成成熟优势卵泡并破茧排出。这就是不孕、月经紊乱和代谢失调的核心根源。
+          </p>
+          
+          <div class="pt-2 flex flex-wrap gap-2">
+            <span @click="showTerm('hpgh')" class="px-2.5 py-1 text-xs rounded-full bg-wc-brown-light hover:bg-wc-pink-medium/35 border border-border-brown-light/80 cursor-help transition-colors text-text-brownRed flex items-center gap-1">
+              🔍 什么是HPG轴？
+            </span>
+            <span @click="showTerm('ir')" class="px-2.5 py-1 text-xs rounded-full bg-wc-brown-light hover:bg-wc-blue-medium/35 border border-border-brown-light/80 cursor-help transition-colors text-text-brownRed flex items-center gap-1">
+              🔍 胰岛素抵抗
+            </span>
+            <span @click="showTerm('coc')" class="px-2.5 py-1 text-xs rounded-full bg-wc-brown-light hover:bg-wc-green-sprout/35 border border-border-brown-light/80 cursor-help transition-colors text-text-brownRed flex items-center gap-1">
+              🔍 避孕药治多囊？
+            </span>
+          </div>
+        </div>
+
+        <!-- Right half: Medical Vector Illustration -->
+        <div class="md:col-span-5 flex justify-center items-center relative z-10">
+          <div class="w-full max-w-[290px] md:max-w-none aspect-[3/4] rounded-2xl bg-gradient-to-tr from-wc-blue-wash/30 to-wc-pink-wash/30 p-3 border border-border-brown-light/50 shadow-xs relative overflow-hidden group">
+            <div class="absolute inset-0 bg-white/10 backdrop-blur-xs z-0"></div>
+            
+            <!-- MASTER VECTOR ILLUSTRATION: HIGH-FIDELITY WATERCOLOR UTERUS -->
+            <svg id="watercolor-uterus-illustration" viewBox="0 0 600 780" class="w-full h-full select-none pointer-events-none relative z-10 transition-transform duration-700 group-hover:scale-[1.03]" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="8" result="blur" />
+                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+                <filter id="watercolorBleed" x="-10%" y="-10%" width="120%" height="120%">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="4" result="noise" />
+                  <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" xChannelSelector="R" yChannelSelector="G" />
+                </filter>
+                <radialGradient id="pinkWatercolorWash" cx="35%" cy="30%" r="65%">
+                  <stop offset="0%" stop-color="#FFF2F4" stop-opacity="1" />
+                  <stop offset="45%" stop-color="#FCDCE2" stop-opacity="0.85" />
+                  <stop offset="80%" stop-color="#FAADB9" stop-opacity="0.4" />
+                  <stop offset="100%" stop-color="#FCDCE2" stop-opacity="0" />
+                </radialGradient>
+                <radialGradient id="blueWatercolorWash" cx="65%" cy="75%" r="65%">
+                  <stop offset="0%" stop-color="#ECF4F8" stop-opacity="1" />
+                  <stop offset="50%" stop-color="#D2E2EE" stop-opacity="0.85" />
+                  <stop offset="85%" stop-color="#A9C7DD" stop-opacity="0.4" />
+                  <stop offset="100%" stop-color="#D2E2EE" stop-opacity="0" />
+                </radialGradient>
+                <linearGradient id="uterusMuscle" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#F59FA3" />
+                  <stop offset="50%" stop-color="#E36C72" />
+                  <stop offset="100%" stop-color="#C9444A" />
+                </linearGradient>
+                <linearGradient id="endometriumLining" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#FFF2F3" />
+                  <stop offset="40%" stop-color="#FCAEA2" />
+                  <stop offset="100%" stop-color="#F07F85" />
+                </linearGradient>
+                <radialGradient id="ovaryTissue" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#FFFFFF" />
+                  <stop offset="65%" stop-color="#FDF0EC" />
+                  <stop offset="100%" stop-color="#E6CEC7" />
+                </radialGradient>
+                <radialGradient id="follicleGlow" cx="35%" cy="35%" r="65%">
+                  <stop offset="0%" stop-color="#FFFFFC" />
+                  <stop offset="35%" stop-color="#FFF9C4" />
+                  <stop offset="80%" stop-color="#FCD34D" />
+                  <stop offset="100%" stop-color="#D97706" />
+                </radialGradient>
+                <linearGradient id="sproutGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#E4F5E6" />
+                  <stop offset="50%" stop-color="#A3D9A5" />
+                  <stop offset="100%" stop-color="#589A6A" />
+                </linearGradient>
+                <linearGradient id="watercolorStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#8C6F67" stop-opacity="0.4" />
+                  <stop offset="100%" stop-color="#5C1E21" stop-opacity="0.55" />
+                </linearGradient>
+              </defs>
+
+              <!-- 1. BACKGROUND WATERCOLOR SPLASHES AND WATER STAINS -->
+              <g id="watercolor-wash-group" filter="url(#watercolorBleed)">
+                <path d="M 50,80 Q 200,30 380,90 T 550,220 Q 580,380 440,480 T 150,420 Q 20,280 50,80 Z" fill="url(#pinkWatercolorWash)" />
+                <path d="M 220,380 Q 420,300 520,440 T 540,680 Q 380,760 210,710 T 80,510 Q 120,410 220,380 Z" fill="url(#blueWatercolorWash)" />
+                <path d="M 30,420 Q 120,380 180,440 T 120,580 Q 20,540 30,420 Z" fill="#E4F3E6" opacity="0.55" />
+                <path d="M 70,110 Q 190,65 360,115 T 510,240 Q 535,370 415,460 T 170,400 Q 50,290 70,110 Z" fill="none" stroke="#F4B8C5" stroke-width="1.2" stroke-dasharray="300, 5, 120, 4, 340, 6" opacity="0.5" />
+                <path d="M 235,395 Q 405,325 495,455 T 515,655 Q 375,725 225,680 T 105,520 Q 140,430 235,395 Z" fill="none" stroke="#A9C2D6" stroke-width="1.2" stroke-dasharray="250, 4, 180, 5, 290, 3" opacity="0.55" />
+              </g>
+
+              <!-- 2. HEALING HANDS CRADLING THE ANATOMY -->
+              <g id="healing-hands-watercolor" filter="url(#softGlow)" opacity="0.92">
+                <path d="M 120,780 C 135,660 160,590 110,480 C 85,420 90,340 135,310 C 170,285 190,320 205,385 C 215,425 225,475 245,465 C 260,455 255,380 252,325 C 248,285 268,275 282,310 C 292,335 298,395 298,465 L 294,780 Z" fill="#FAF0E6" stroke="url(#watercolorStroke)" stroke-width="1.5" stroke-linejoin="round" />
+                <path d="M 480,780 C 465,660 440,590 490,480 C 515,420 510,340 465,310 C 430,285 410,320 395,385 C 385,425 375,475 355,465 C 340,455 345,380 348,325 C 352,285 332,275 318,310 C 308,335 302,395 302,465 L 306,780 Z" fill="#FAF0E6" stroke="url(#watercolorStroke)" stroke-width="1.5" stroke-linejoin="round" />
+              </g>
+
+              <!-- 3. MEDICAL ANATOMY SECTION -->
+              <g id="medically-detailed-anatomy" transform="translate(0, -20)">
+                <!-- Vagina Outer & Inner -->
+                <path d="M 270,555 C 270,620 260,635 275,670 L 325,670 C 340,635 330,620 330,555 Z" fill="#EFA2A5" stroke="#C9444A" stroke-width="1.5" opacity="0.8" />
+                <path d="M 280,590 Q 300,595 320,590 M 275,615 Q 300,622 325,615 M 282,640 Q 300,643 318,640" fill="none" stroke="#E07075" stroke-width="1.5" opacity="0.7" stroke-linecap="round" />
+
+                <!-- Cervix -->
+                <path d="M 265,540 Q 300,565 335,540 Q 345,560 315,560 L 285,560 Z" fill="#E57D81" stroke="#C9444A" stroke-width="1" />
+                <path d="M 296,515 L 296,550 A 4,4 0 0,0 304,550 L 304,515 Z" fill="#FFF2F3" stroke="#C9444A" stroke-width="1" />
+                
+                <!-- Myometrium (Uterus wall) -->
+                <path d="M 300,345 C 215,345 220,440 255,515 L 265,540 Q 300,565 335,540 L 345,515 C 380,440 385,345 300,345 Z" fill="url(#uterusMuscle)" stroke="#A6282E" stroke-width="1.8" />
+
+                <!-- Endometrium lining -->
+                <path d="M 300,380 C 265,395 260,455 285,515 L 315,515 C 340,455 335,395 300,380 Z" fill="url(#endometriumLining)" stroke="#E36C72" stroke-width="1" />
+                <path d="M 275,410 Q 290,412 285,425 M 325,410 Q 310,412 315,425 M 270,445 Q 295,448 290,465" fill="none" stroke="#D3565C" stroke-width="1" opacity="0.6" stroke-linecap="round" />
+
+                <!-- Fallopian Tubes -->
+                <path d="M 245,372 C 190,365 160,340 135,370 C 115,395 125,415 130,422" fill="none" stroke="url(#uterusMuscle)" stroke-width="8.5" stroke-linecap="round" />
+                <path d="M 245,372 C 190,365 160,340 135,370 T 130,422" fill="none" stroke="#A6282E" stroke-width="1.5" />
+                
+                <path d="M 355,372 C 410,365 440,340 465,370 C 485,395 475,415 470,422" fill="none" stroke="url(#uterusMuscle)" stroke-width="8.5" stroke-linecap="round" />
+                <path d="M 355,372 C 410,365 440,340 465,370 T 470,422" fill="none" stroke="#A6282E" stroke-width="1.5" />
+                
+                <!-- Left Fimbriae -->
+                <g transform="translate(130, 422)">
+                  <path d="M -8,-5 Q -15,5 -18,18 Q -10,12 -3,15 Q -4,22 5,20 Q 2,12 8,10 Q 12,5 4,-2 Q 0,-12 -8,-5 Z" fill="#D6585E" stroke="#A6282E" stroke-width="1.2" />
+                </g>
+                <!-- Right Fimbriae -->
+                <g transform="translate(470, 422)">
+                  <path d="M 8,-5 Q 15,5 18,18 Q 10,12 3,15 Q 4,22 -5,20 Q -2,12 -8,10 Q -12,5 -4,-2 Q 0,-12 8,-5 Z" fill="#D6585E" stroke="#A6282E" stroke-width="1.2" />
+                </g>
+
+                <!-- Left Ovary: NORMAL (one dominant mature follicle) -->
+                <g>
+                  <ellipse cx="160" cy="455" rx="36" ry="24" transform="rotate(-15, 160, 455)" fill="url(#ovaryTissue)" stroke="#C7B2AD" stroke-width="1.5" />
+                  <circle cx="168" cy="445" r="10" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="1" />
+                  <circle cx="140" cy="452" r="4" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.5" />
+                  <rect x="110" y="492" width="100" height="18" rx="6" fill="#E4F3E6" stroke="#589A6A" stroke-width="0.5" />
+                  <text x="160" y="504" text-anchor="middle" fill="#2E5238" font-size="9" font-weight="bold">正常卵巢: 优势成熟</text>
+                </g>
+
+                <!-- Right Ovary: PCOS (Multiple small follicles - string of pearls) -->
+                <g>
+                  <ellipse cx="440" cy="455" rx="42" ry="27" transform="rotate(15, 440, 455)" fill="url(#ovaryTissue)" stroke="#C7B2AD" stroke-width="1.5" />
+                  <!-- Pearls -->
+                  <circle cx="415" cy="445" r="4.5" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
+                  <circle cx="422" cy="438" r="4" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
+                  <circle cx="434" cy="434" r="4.5" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
+                  <circle cx="448" cy="435" r="4" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
+                  <circle cx="460" cy="440" r="4" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
+                  <circle cx="466" cy="450" r="4.5" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
+                  <circle cx="464" cy="462" r="4" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
+                  <circle cx="454" cy="470" r="4.2" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
+                  <circle cx="442" cy="473" r="4" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
+                  <circle cx="428" cy="470" r="4.5" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
+                  <circle cx="418" cy="458" r="4.2" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.6" />
+                  
+                  <rect x="390" y="492" width="100" height="18" rx="6" fill="#FFF0F2" stroke="#FAADB9" stroke-width="0.5" />
+                  <text x="440" y="504" text-anchor="middle" fill="#8A252E" font-size="9" font-weight="bold">多囊卵巢: 珠链小卵泡</text>
+                </g>
+
+                <!-- Ligaments -->
+                <path d="M 194,445 Q 220,435 250,422" fill="none" stroke="#D38A8E" stroke-width="3" opacity="0.5" />
+                <path d="M 406,445 Q 380,435 350,422" fill="none" stroke="#D38A8E" stroke-width="3" opacity="0.5" />
+              </g>
+
+              <!-- 4. GENTLE FLORAL EMBELLISHMENTS -->
+              <g id="sprout-floral-decor" filter="url(#softGlow)">
+                <path d="M 160,650 Q 110,630 140,560" fill="none" stroke="#589A6A" stroke-width="1.5" />
+                <path d="M 140,560 Q 155,550 160,540 Q 150,565 140,560" fill="url(#sproutGreen)" stroke="#4A8259" stroke-width="0.8" />
+                <path d="M 120,600 Q 100,595 95,585 Q 115,595 120,600" fill="url(#sproutGreen)" stroke="#4A8259" stroke-width="0.8" />
+                
+                <g transform="translate(145, 630)">
+                  <circle cx="0" cy="0" r="14" fill="#5C1E21" opacity="0.06" />
+                  <path d="M 0,-14 C 5,-10 12,-12 12,-5 C 12,2 5,0 12,10 C 5,8 0,14 0,14 C -5,14 0,8 -12,10 C -5,0 -12,2 -12,-5 C -12,-12 -5,-10 0,-14 Z" fill="#FFF" stroke="#E5D9D1" stroke-width="0.8" />
+                  <circle cx="0" cy="0" r="4" fill="#FCD34D" />
+                </g>
+
+                <path d="M 440,650 Q 490,630 460,560" fill="none" stroke="#589A6A" stroke-width="1.5" />
+                <path d="M 460,560 Q 445,550 440,540 Q 450,565 460,560" fill="url(#sproutGreen)" stroke="#4A8259" stroke-width="0.8" />
+                
+                <g transform="translate(455, 630)">
+                  <circle cx="0" cy="0" r="14" fill="#5C1E21" opacity="0.06" />
+                  <path d="M 0,-14 C 5,-10 12,-12 12,-5 C 12,2 5,0 12,10 C 5,8 0,14 0,14 C -5,14 0,8 -12,10 C -5,0 -12,2 -12,-5 C -12,-12 -5,-10 0,-14 Z" fill="#FFF" stroke="#E5D9D1" stroke-width="0.8" />
+                  <circle cx="0" cy="0" r="4" fill="#FCD34D" />
+                </g>
+              </g>
+
+              <!-- 5. GLOWING ACCENT BUBBLES -->
+              <g opacity="0.75" filter="url(#softGlow)">
+                <circle cx="390" cy="275" r="12" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.8" />
+                <circle cx="410" cy="305" r="8" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.8" />
+                <circle cx="445" cy="285" r="15" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="1" />
+                <circle cx="180" cy="290" r="10" fill="url(#follicleGlow)" stroke="#FFF" stroke-width="0.8" />
+              </g>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. INTERACTIVE ASSESSMENT WIZARD -->
+      <section class="bg-white rounded-3xl border border-border-brown-light/80 p-6 md:p-8 shadow-sm relative no-print">
+        <h2 class="text-xl md:text-2xl font-serif font-bold text-text-brownRed mb-6 flex items-center gap-2">
+          <span>📋</span> 1. 第一阶段：多维度临床表现评估
+        </h2>
+        
+        <!-- STEPPER COMPONENT -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          <div 
+            v-for="(stepName, index) in ['主要诉求', '体重/BMI', '血糖/代谢', '备孕计划']" 
+            :key="index"
+            class="p-3 rounded-xl border flex items-center gap-3 transition-all cursor-pointer"
+            :class="[
+              activeStep === index + 1 
+                ? 'bg-wc-pink-light border-wc-pink-deep text-text-brownRed font-semibold shadow-xs' 
+                : 'bg-wc-milk/40 border-border-brown-light/60 text-gray-400 hover:bg-wc-milk/80'
+            ]"
+            @click="activeStep = index + 1"
+          >
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-mono"
+                  :class="[activeStep === index + 1 ? 'bg-wc-pink-deep text-text-brownRed font-bold' : 'bg-gray-100 text-gray-400']">
+              {{ index + 1 }}
+            </span>
+            <span class="text-xs">{{ stepName }}</span>
+          </div>
+        </div>
+
+        <!-- WIZARD STEP PANELS -->
+        <div class="min-h-[160px] pb-6">
+          <transition name="fade" mode="out-in">
+            
+            <!-- STEP 1: Main Symptoms / Goal -->
+            <div v-if="activeStep === 1" :key="1" class="space-y-4">
+              <p class="text-sm font-medium text-gray-700">您当前最急切改善或关注的主要症状与调理目标是：</p>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <button 
+                  v-for="opt in concernOptions" 
+                  :key="opt.value"
+                  @click="answers.concern = opt.value; nextStep()"
+                  class="p-4 rounded-xl border text-left text-xs transition-all relative flex flex-col justify-between h-28 cursor-pointer"
+                  :class="[answers.concern === opt.value ? 'bg-wc-pink-light border-wc-pink-deep text-text-brownRed ring-1 ring-wc-pink-deep' : 'bg-white border-gray-200 hover:border-wc-pink-deep/50 text-gray-600']"
+                >
+                  <span class="font-bold block text-sm mb-1">{{ opt.label }}</span>
+                  <span class="text-[11px] text-gray-500 leading-relaxed">{{ opt.desc }}</span>
+                  <span v-if="answers.concern === opt.value" class="absolute bottom-2 right-2 text-wc-pink-deep">✔</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- STEP 2: BMI Calculator & Weights -->
+            <div v-else-if="activeStep === 2" :key="2" class="space-y-5">
+              <p class="text-sm font-medium text-gray-700">提供您的身高体重，自动分析您的体量属性：</p>
+              
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                <!-- BMI inputs -->
+                <div class="md:col-span-5 grid grid-cols-2 gap-3 bg-wc-milk/40 p-4 rounded-xl border border-border-brown-light/40">
+                  <div>
+                    <label class="block text-[11px] font-mono text-gray-500 uppercase mb-1">身高 (cm)</label>
+                    <input 
+                      type="number" 
+                      v-model.number="bmiCalc.height" 
+                      @input="calculateBMI" 
+                      class="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:outline-none focus:ring-1 focus:ring-wc-pink-deep" 
+                      placeholder="如 165"
+                    />
+                  </div>
+                  <div>
+                    <label class="block text-[11px] font-mono text-gray-500 uppercase mb-1">体重 (kg)</label>
+                    <input 
+                      type="number" 
+                      v-model.number="bmiCalc.weight" 
+                      @input="calculateBMI" 
+                      class="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:outline-none focus:ring-1 focus:ring-wc-pink-deep" 
+                      placeholder="如 60"
+                    />
+                  </div>
+                </div>
+
+                <!-- BMI Result Output -->
+                <div class="md:col-span-7 flex items-center gap-4">
+                  <div class="text-center bg-white border border-border-brown-light p-3 rounded-xl min-w-[90px] shadow-xs">
+                    <span class="block text-[10px] font-mono text-gray-400 uppercase">BMI 指数</span>
+                    <span class="text-2xl font-mono font-bold text-text-brownRed">{{ bmiCalc.bmi || '--' }}</span>
+                  </div>
+                  <div class="flex-1">
+                    <span class="text-xs font-bold block mb-1" :class="[answers.weight === '超重或肥胖' ? 'text-red-500' : 'text-wc-green-dark']">
+                      体征判定：{{ answers.weight || '未测量' }}
+                    </span>
+                    <p class="text-[11px] text-gray-500 leading-relaxed">
+                      亚洲女性标准BMI范围为 18.5 ~ 23.9。超出 24.0 判定为超重/肥胖，多囊诊疗中对超重群体强烈主张先科学降重 5%-10% 作为一线基础。
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Option pre-select override buttons -->
+              <div class="flex items-center gap-3 pt-2 border-t border-dashed border-border-brown-light/40">
+                <span class="text-xs text-gray-500">也可直接手动选择：</span>
+                <button 
+                  @click="answers.weight = '超重或肥胖'; nextStep()" 
+                  class="px-3 py-1.5 rounded-lg border text-xs transition-all cursor-pointer"
+                  :class="[answers.weight === '超重或肥胖' ? 'bg-wc-pink-light border-wc-pink-deep text-text-brownRed' : 'bg-white border-gray-200 hover:border-wc-pink-deep/30 text-gray-600']"
+                >
+                  🤰 超重或肥胖 (BMI ≥ 24.0)
+                </button>
+                <button 
+                  @click="answers.weight = '体重正常（标准或偏瘦）'; nextStep()" 
+                  class="px-3 py-1.5 rounded-lg border text-xs transition-all cursor-pointer"
+                  :class="[answers.weight === '体重正常（标准或偏瘦）' ? 'bg-wc-blue-light border-wc-blue-deep text-text-brownRed' : 'bg-white border-gray-200 hover:border-wc-blue-deep/30 text-gray-600']"
+                >
+                  🏃 体重正常或偏瘦 (BMI &lt; 24.0)
+                </button>
+              </div>
+            </div>
+
+            <!-- STEP 3: Glycemic Status -->
+            <div v-if="activeStep === 3" :key="3" class="space-y-4">
+              <p class="text-sm font-medium text-gray-700">您近期的糖代谢及胰岛素功能筛查结果是（三项有任意一项异常即为有异常）：</p>
+              
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <button 
+                  v-for="opt in glycemicOptions" 
+                  :key="opt.value"
+                  @click="answers.glycemic = opt.value; nextStep()"
+                  class="p-4 rounded-xl border text-left text-xs transition-all relative flex flex-col justify-between h-24 cursor-pointer"
+                  :class="[answers.glycemic === opt.value ? 'bg-wc-pink-light border-wc-pink-deep text-text-brownRed ring-1 ring-wc-pink-deep' : 'bg-white border-gray-200 hover:border-wc-pink-deep/50 text-gray-600']"
+                >
+                  <span class="font-bold block text-sm mb-1">{{ opt.label }}</span>
+                  <span class="text-[11px] text-gray-500 leading-relaxed">{{ opt.desc }}</span>
+                  <span v-if="answers.glycemic === opt.value" class="absolute bottom-2 right-2 text-wc-pink-deep">✔</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- STEP 4: Pregnancy Plan -->
+            <div v-if="activeStep === 4" :key="4" class="space-y-4">
+              <p class="text-sm font-medium text-gray-700">您近 6 个月内是否有积极的备孕受孕计划？</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <button 
+                  v-for="opt in pregnancyOptions" 
+                  :key="opt.value"
+                  @click="answers.pregnancy = opt.value; nextStep()"
+                  class="p-4 rounded-xl border text-left text-xs transition-all relative flex flex-col justify-between h-24 cursor-pointer"
+                  :class="[answers.pregnancy === opt.value ? 'bg-wc-pink-light border-wc-pink-deep text-text-brownRed ring-1 ring-wc-pink-deep' : 'bg-white border-gray-200 hover:border-wc-pink-deep/50 text-gray-600']"
+                >
+                  <span class="font-bold block text-sm mb-1">{{ opt.label }}</span>
+                  <span class="text-[11px] text-gray-500 leading-relaxed">{{ opt.desc }}</span>
+                  <span v-if="answers.pregnancy === opt.value" class="absolute bottom-2 right-2 text-wc-pink-deep">✔</span>
+                </button>
+              </div>
+            </div>
+
+          </transition>
+        </div>
+
+        <!-- Progress Footer / Stepper controls -->
+        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+          <button 
+            @click="prevStep" 
+            :disabled="activeStep === 1"
+            class="px-4 py-2 text-xs rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-600 disabled:opacity-40 disabled:hover:bg-transparent cursor-pointer"
+          >
+            ← 上一步
+          </button>
+          
+          <div class="text-xs text-gray-400 font-mono">
+            已填写：{{ completedFieldsCount }} / 4 项
+          </div>
+
+          <button 
+            @click="nextStep" 
+            v-if="activeStep < 4"
+            class="px-4 py-2 text-xs rounded-lg bg-text-brownRed hover:bg-text-brownRed/90 text-white font-medium cursor-pointer"
+          >
+            下一步 →
+          </button>
+          <button 
+            v-else
+            @click="scrollToResult"
+            class="px-4 py-2 text-xs rounded-lg bg-wc-green-dark hover:bg-wc-green-dark/90 text-white font-semibold cursor-pointer"
+          >
+            查看匹配诊疗路径 ↓
+          </button>
+        </div>
+      </section>
+
+      <!-- 4. DYNAMIC MEDICAL REPORT CARD -->
+      <section id="result-section" class="scroll-mt-8 print-full">
+        
+        <!-- Welcome Initial State -->
+        <div v-if="!matchedProfile" class="bg-wc-milk/60 border border-dashed border-border-brown-medium rounded-3xl p-10 text-center space-y-4 no-print">
+          <div class="text-4xl">🔬</div>
+          <h3 class="text-lg font-serif font-bold text-text-brownRed">等待完整的体征指标输入...</h3>
+          <p class="text-xs text-gray-500 max-w-md mx-auto">
+            请完成上述 4 步多维表现评估，系统将根据您当前录入的“主要诉求、体脂率BMI、糖代谢、生育目标”指标，在医学教辅库中智能锁定最契合您的具体临床分型。
+          </p>
+        </div>
+
+        <!-- Matched Report Card Detail -->
+        <div v-else class="space-y-8 animate-fade-in">
+          
+          <!-- Summary Header Header Block -->
+          <div class="bg-white rounded-3xl border border-border-brown-light p-6 md:p-8 shadow-sm relative overflow-hidden watercolor-stain-card">
+            <div class="absolute top-2 right-4 text-[10px] font-mono text-gray-400 no-print">
+              当前匹配决策报告
+            </div>
+
+            <!-- Profile Title and Metadata header -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-gray-100">
+              <div class="space-y-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="px-2 py-0.5 rounded-full bg-wc-pink-deep/30 border border-wc-pink-deep text-[10px] font-mono text-text-brownRed font-bold">
+                    Profile ID {{ matchedProfile.id }}
+                  </span>
+                  <span class="text-xs text-gray-500">临床专属分型代码</span>
+                </div>
+                <h3 class="text-xl md:text-2xl font-serif font-bold text-text-brownRed">
+                  {{ matchedProfile.title }}
+                </h3>
+              </div>
+              
+              <button onclick="window.print()" class="no-print self-start md:self-center px-4 py-2 rounded-xl bg-wc-brown-light hover:bg-wc-brown-light/80 border border-border-brown-light text-xs font-medium text-text-brownRed flex items-center gap-1.5 transition-colors cursor-pointer">
+                🖨 打印 / 存为 PDF 调理单
+              </button>
+            </div>
+
+            <!-- Current input credentials display -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6">
+              <div class="p-3.5 rounded-xl bg-wc-pink-light/60 border border-wc-pink-medium/40">
+                <span class="block text-[10px] text-gray-400 mb-1">主要诉求/症状</span>
+                <span class="text-xs font-bold text-text-brownRed">{{ answers.concern || '--' }}</span>
+              </div>
+              <div class="p-3.5 rounded-xl bg-wc-blue-light/60 border border-wc-blue-medium/40">
+                <span class="block text-[10px] text-gray-400 mb-1">体重指数 BMI 属性</span>
+                <span class="text-xs font-bold text-text-brownRed">{{ answers.weight || '--' }}</span>
+              </div>
+              <div class="p-3.5 rounded-xl bg-wc-green-sprout/40 border border-border-brown-light/40">
+                <span class="block text-[10px] text-gray-400 mb-1">糖基代谢状态</span>
+                <span class="text-xs font-bold text-text-brownRed">{{ answers.glycemic || '--' }}</span>
+              </div>
+              <div class="p-3.5 rounded-xl bg-wc-milk border border-border-brown-light/40">
+                <span class="block text-[10px] text-gray-400 mb-1">近期备孕战略</span>
+                <span class="text-xs font-bold text-text-brownRed">{{ answers.pregnancy || '--' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- The Core 3 Guidance Columns (Green, Yellow, Red) -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- Column 1: 一线首选方案 (Green) -->
+            <div class="flex flex-col h-full rounded-3xl border border-border-brown-light/80 overflow-hidden shadow-xs relative">
+              <div class="bg-wc-green-sprout/60 p-4 border-b border-border-brown-light/60 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="text-base">🟢</span>
+                  <span class="font-serif font-bold text-text-brownRed text-sm md:text-base">临床一线首选方案</span>
+                </div>
+                <span class="text-[10px] font-mono text-wc-green-dark font-bold bg-white/80 px-2 py-0.5 rounded-full border border-wc-green-dark/20 uppercase">First-Line</span>
+              </div>
+
+              <div class="bg-white/85 p-6 flex-1 space-y-6">
+                <p class="text-xs text-gray-500 leading-relaxed border-b border-dashed border-gray-100 pb-3">
+                  这是国际各大家医学会（ASRM/ESHRE）指南公认最安全、最先提倡开展的治疗。应在专业临床医生监督下立即落实：
+                </p>
+
+                <div v-for="(item, idx) in matchedProfile.firstLine" :key="idx" class="space-y-2.5">
+                  <div class="flex items-start gap-2">
+                    <span class="w-5 h-5 rounded-md bg-wc-green-sprout text-[11px] font-mono font-bold text-wc-green-dark flex items-center justify-center shrink-0 mt-0.5">
+                      {{ idx + 1 }}
+                    </span>
+                    <h4 class="text-sm font-bold text-gray-800 leading-snug">{{ item.name }}</h4>
+                  </div>
+                  <div class="watercolor-box-green p-4 rounded-xl text-xs text-gray-600 leading-relaxed">
+                    {{ item.metaphor }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 2: 二线及辅治选择 (Blue) -->
+            <div class="flex flex-col h-full rounded-3xl border border-border-brown-light/80 overflow-hidden shadow-xs relative">
+              <div class="bg-wc-blue-wash/60 p-4 border-b border-border-brown-light/60 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="text-base">🔵</span>
+                  <span class="font-serif font-bold text-text-brownRed text-sm md:text-base">二线方案及辅助调护</span>
+                </div>
+                <span class="text-[10px] font-mono text-wc-blue-deep font-bold bg-white/80 px-2 py-0.5 rounded-full border border-wc-blue-deep/20 uppercase">Second-Line</span>
+              </div>
+
+              <div class="bg-white/85 p-6 flex-1 space-y-6">
+                <p class="text-xs text-gray-500 leading-relaxed border-b border-dashed border-gray-100 pb-3">
+                  当一线干预未能完全恢复、或因个人体征需要强化联合治疗时，由专家医生评估并合理引入的强化性医疗手段：
+                </p>
+
+                <div v-for="(item, idx) in matchedProfile.secondLine" :key="idx" class="space-y-2.5">
+                  <div class="flex items-start gap-2">
+                    <span class="w-5 h-5 rounded-md bg-wc-blue-light text-[11px] font-mono font-bold text-wc-blue-deep flex items-center justify-center shrink-0 mt-0.5">
+                      {{ idx + 1 }}
+                    </span>
+                    <h4 class="text-sm font-bold text-gray-800 leading-snug">{{ item.name }}</h4>
+                  </div>
+                  <div class="watercolor-box-blue p-4 rounded-xl text-xs text-gray-600 leading-relaxed">
+                    {{ item.metaphor }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 3: 避坑防骗指南 (Red) -->
+            <div class="flex flex-col h-full rounded-3xl border border-border-brown-light/80 overflow-hidden shadow-xs relative">
+              <div class="bg-wc-pink-wash/60 p-4 border-b border-border-brown-light/60 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="text-base">🔴</span>
+                  <span class="font-serif font-bold text-text-brownRed text-sm md:text-base">避坑防骗科学防线</span>
+                </div>
+                <span class="text-[10px] font-mono text-red-400 font-bold bg-white/80 px-2 py-0.5 rounded-full border border-red-200 uppercase">Warning</span>
+              </div>
+
+              <div class="bg-white/85 p-6 flex-1 space-y-6">
+                <p class="text-xs text-gray-500 leading-relaxed border-b border-dashed border-gray-100 pb-3">
+                  多囊属于慢性全身综合征，市面充斥大量骗局。以下是专门针对您体征分型拆穿的典型智商税和商业噱头陷阱：
+                </p>
+
+                <div v-for="(item, idx) in matchedProfile.harmful" :key="idx" class="space-y-2.5">
+                  <div class="flex items-start gap-2">
+                    <span class="w-5 h-5 rounded-md bg-wc-pink-light text-[11px] font-mono font-bold text-red-500 flex items-center justify-center shrink-0 mt-0.5">
+                      ⚠️
+                    </span>
+                    <h4 class="text-sm font-bold text-red-800 leading-snug">{{ item.name }}</h4>
+                  </div>
+                  <div class="watercolor-box-pink p-4 rounded-xl text-xs text-red-700 leading-relaxed border border-red-100">
+                    <span class="font-bold block mb-1">❌ 避坑理由：</span>
+                    {{ item.reason }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- EXCLUSIVE CLINICAL TIMELINE DICTIONARY & NOTES -->
+          <div class="bg-white rounded-3xl border border-border-brown-light/80 p-6 md:p-8 space-y-4 shadow-sm relative overflow-hidden">
+            <h4 class="text-base font-serif font-bold text-text-brownRed flex items-center gap-1.5">
+              <span>🩺</span> 临床决策重要说明与医学原则
+            </h4>
+            <div class="text-xs text-gray-600 leading-relaxed space-y-3">
+              <p>
+                1. <strong>多囊的本质与逆转：</strong> 多囊卵巢综合征（PCOS）是一种具有高度基因多态性的多系统神经内分泌综合征。在当前的医学界，它通常是“无法被一劳永逸根治”的，但是它<strong>“完全可以被完美临床治愈并彻底逆转”</strong>。通过系统化、分时段、针对性的慢代谢重塑，您完全可以摆脱长痘、脱发、停经的深渊，并完美诞生健康的宝宝。
+              </p>
+              <p>
+                2. <strong>生活方式是地基：</strong> 无论何种分型，健康的抗炎慢糖饮食、充足睡眠和持之以恒的科学抗阻力运动都是不可替代的第一生命保障。生活方式的基石越稳固，西医指南上的一线、二线处方药物在您体内绽放的药效敏感度就越高。
+              </p>
+              <p>
+                3. <strong>严正安全红线（避坑要领）：</strong> 绝不可盲目为了“避开西药副作用”去喝成分和毒副作用完全无法掌控的民间偏方药，不查明血糖和超声盲目私调药物更无异于饮鸩止渴。
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 5. CLINICAL EDUCATIONAL DICTIONARY POPUP (Modal-like card) -->
+      <transition name="fade">
+        <div v-if="termPopup" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs no-print">
+          <div class="bg-white rounded-2xl max-w-md w-full border border-border-brown-light shadow-xl p-6 relative overflow-hidden watercolor-stain-card">
+            <h3 class="text-lg font-serif font-bold text-text-brownRed mb-3 flex items-center gap-2">
+              📖 医学小百科：{{ termPopup.title }}
+            </h3>
+            
+            <p class="text-xs text-gray-600 leading-relaxed mb-6">
+              {{ termPopup.desc }}
+            </p>
+
+            <button 
+              @click="termPopup = null"
+              class="w-full py-2.5 rounded-xl bg-text-brownRed hover:bg-text-brownRed/90 text-white text-xs font-semibold tracking-wide transition-colors cursor-pointer"
+            >
+              我知道了
+            </button>
+          </div>
+        </div>
+      </transition>
+
+      <!-- 6. CLINICAL KNOWLEDGE FAQS SECTION -->
+      <section class="bg-white/80 rounded-3xl border border-border-brown-light p-6 md:p-8 shadow-sm no-print">
+        <h2 class="text-xl md:text-2xl font-serif font-bold text-text-brownRed mb-6 flex items-center gap-2">
+          <span>❔</span> 常见多囊临床疑难问题解答 (FAQ)
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div 
+            v-for="(faq, idx) in faqs" 
+            :key="idx"
+            class="p-4 rounded-2xl border border-border-brown-light/60 transition-all bg-wc-milk/20 hover:bg-wc-milk/60 cursor-pointer"
+            @click="faq.open = !faq.open"
+          >
+            <div class="flex items-center justify-between gap-4">
+              <h3 class="text-xs md:text-sm font-bold text-gray-800 leading-snug">
+                {{ faq.question }}
+              </h3>
+              <span class="text-xs text-text-brownRed font-mono">{{ faq.open ? '▲' : '▼' }}</span>
+            </div>
+            
+            <transition name="fade">
+              <div v-if="faq.open" class="mt-3 text-xs text-gray-600 leading-relaxed border-t border-dashed border-border-brown-light/50 pt-3">
+                {{ faq.answer }}
+              </div>
+            </transition>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. STRICT EVIDENCE-BASED CLINICAL DISCLAIMER -->
+      <footer class="bg-wc-pink-wash/50 border border-border-brown-light/40 rounded-3xl p-6 md:p-8 text-center space-y-3">
+        <div class="inline-block px-3 py-1 rounded-full bg-red-50 border border-red-200 text-[10px] text-red-600 font-bold uppercase tracking-wider">
+          ⚠️ 严格免责与医疗执业安全宣告
+        </div>
+        
+        <p class="max-w-3xl mx-auto text-[11px] text-gray-500 leading-relaxed">
+          本多囊卵巢综合征（PCOS）决策系统包含的所有数据、临床分型匹配、一线/二线医学药物隐喻解释和生活习惯指导，均严格整理自国际妇产科联盟 (FIGO)、美国生殖医学会 (ASRM)、欧洲人类生殖与胚胎学会 (ESHRE) 及中华医学会妇产科学分会发布的最新循证医学临床实践指南。本工具定位纯属“患者医学健康教育与教学辅助辅助参考书”。
+        </p>
+        
+        <p class="max-w-3xl mx-auto text-[11px] text-red-600/80 font-bold leading-relaxed">
+          系统推荐的药物（如复方口服避孕药、二甲双胍、来曲唑、螺内酯、阿卡波糖等）均为严格限制的处方类控制药物。任何患者绝不可在没有获得有国家执业资格的妇产科、生殖医学科或内分泌科医生开具纸面处方前，擅自私下网购、购买或自行调配服用。由于不当私自服药带来的任何严重生命损害，本教学工具及GitHub托管作者概不承担任何民事或刑事法律连带赔偿责任。
+        </p>
+
+        <p class="text-[10px] text-gray-400 font-mono pt-4 border-t border-gray-200/50">
+          © 2026 多囊卵巢综合征 (PCOS) 循证决策系统. Built with gentle watercolor healing design. All Rights Reserved.
+        </p>
+      </footer>
+
+    </main>
+
+  </div>
+
+  <!-- VUE 3 APPLICATION LOGIC -->
+  <script type="text/javascript">
+    const { createApp, ref, computed, watch } = Vue;
+
+    // PCOS Clinical Matching Database
+    const pcosDatabase = {
+      "1.1": {
+        id: "1.1",
+        title: "月经不调/高雄表现型 (正常血糖+超重肥胖)",
+        firstLine: [
+          {
+            name: "生活方式干预 (科学减重 5%-10%)",
+            metaphor: "它就像是给您的卵巢重新做一次‘系统清理’。当身体脂肪过多时，卵巢周围就像堆满了黏稠的‘油漆’，阻断了卵泡自然呼吸和排卵。通过低GI慢升糖餐配合抗阻运动，温和降下5%-10%的体重，就等于挪走了压在卵巢头上的大山，让沉睡的卵泡重新获得氧气，促使卵巢启动排卵程序、恢复月经。"
+          },
+          {
+            name: "复方口服避孕药 (COC) 降雄调经",
+            metaphor: "它就像是一位严格而耐心的‘月经交通指挥官’。避孕药不仅能像盾牌一样挡住‘捣乱’的雄激素，还可以给卵巢按下‘暂停休息键’，让它休养生息，不再疯狂加班却无所获。同时，她按月发出规律撤退指令，安全帮您退除子宫内膜，防止内膜由于长期不来月经而像不流动的浊水一样过度长厚，保护内膜免受病变。"
+          }
+        ],
+        secondLine: [
+          {
+            name: "螺内酯对抗高雄表现",
+            metaphor: "螺内酯在避孕药效果不够完美或不适合用避孕药时出场，它就像是个精密的‘毛囊和皮肤防弹盾牌’。它能抢先锁死您脸部、头皮上毛囊里的‘雄激素接收站’，让狂躁的雄激素即使飘过来也无法靠岸产生破坏。脸上的油痘会显著消退，多肉和粗黑体毛开始变细软。"
+          },
+          {
+            name: "二甲双胍辅助改善",
+            metaphor: "二甲双胍由于在此类‘无胰岛素抵抗证据者’身上获益相对有限，不作为首要任务。但如果您后续的生活方式调理遇到了顽固瓶颈，二甲双胍可以作为一个‘备用的新动力’被请出来，稍微帮您推一把能量代谢，使身体对热量的消耗效率稍有上升。"
+          }
+        ],
+        harmful: [
+          {
+            name: "单纯依赖“多囊专用肌醇”等保健品取代避孕药",
+            reason: "肌醇类保健品只是细胞信号的微调‘辅助小助理’。如果您的月经已经严重不规律，它的力量太弱，根本无法代替西医金标准进行临床‘治本调经’和保护内膜。不加阻断容易由于子宫内膜长期无孕激素撤退而大出血或病变。"
+          },
+          {
+            name: "非正规美容院的“精油卵巢保养/卵巢按摩”",
+            reason: "这纯属没有科学根据的商业套路。卵巢在盆腔深处，隔着厚厚的肚皮和肌肉，普通按摩根本无法触及。更糟糕的是，如果多囊患者卵巢此时有较大囊肿，粗暴的腹部按压有极高概率导致‘囊肿破裂’或者‘卵巢扭转’，造成盆腔大出血等急腹症。"
+          },
+          {
+            name: "自行刮宫或盲目饮用偏方“催经”",
+            reason: "没有查明原因的随意用药催经是一场赌博。市面上千奇百怪的民间祖传催经偏方，往往成分不明，极易加重肝肾损伤。而频繁刮宫非常容易严重损毁子宫内膜基底层，导致后续永久性闭经或无法怀孕。"
+          }
+        ]
+      },
+      "1.2": {
+        id: "1.2",
+        title: "代谢失衡/高雄表现型 (血糖异常+超重肥胖)",
+        firstLine: [
+          {
+            name: "生活方式干预 (联合二甲双胍的核心根基)",
+            metaphor: "不仅需要减重，更需要配合‘温和、限能量防糖饮食’。生活方式调整就像是给快要瘫痪停转的细胞‘减负充电’，带走卡在胰岛素锁眼里的脂肪污垢，让细胞重新欢快地工作。"
+          },
+          {
+            name: "二甲双胍 (经典一线胰岛素增敏剂)",
+            metaphor: "二甲双胍就像是送给您浑身细胞的一把‘黄金开门钥匙’。在胰岛素抵抗状态下，您浑身细胞的大门紧锁，血管里积攒了大量的‘糖斑’却进不去，胰腺只能被迫拼命疯狂加班分泌几倍的胰岛素，这些高额胰岛素会‘附带伤害’到旁边的卵巢，刺激它过量生产雄激素。二甲双胍帮您打开细胞大门，让血管里的糖顺利进去被烧掉作为能量。这样胰腺就可以不再爆肝，胰岛素呼啸而下，雄激素也就跟着跌下高台，皮肤和月经随之恢复正常。"
+          },
+          {
+            name: "复方口服避孕药 (COC) 调控周期",
+            metaphor: "由于您有明显的血糖代谢压力，COC需要作为‘完美辅助合伙人’。医生通常会建议在您的体重稍微趋于稳定、血糖不再亮大红灯时引入它。它能帮您把失衡的雌孕激素拉回黄金比例，温柔且强有力地维护内膜层定期翻新。"
+          }
+        ],
+        secondLine: [
+          {
+            name: "二甲双胍联合吡格列酮治疗",
+            metaphor: "吡格列酮就像是一位‘耐心的物资装卸工’。它能与钥匙（二甲双胍）联合，把油腻外溢的游离脂肪和多余血糖搬进安全的体内小仓库，对严重的难治性胰岛素抵抗极有帮助。副作用是会在体内短暂吸引并积存一点水分，可能会让体重秤稍微上涨，因此需由专科医生密切关注使用。"
+          },
+          {
+            name: "GLP-1受体激动剂（如司美格鲁肽）",
+            metaphor: "它就像是一个‘多维的饱腹调频广播’。它能模仿肠道的信号温柔提醒大脑：‘我已经吃饱了，不饿啦’，帮助延缓胃里食物的排空。如果您合并了极度顽固的单纯运动解决不了的肥胖与高血糖，它在辅助减脂降糖上就像强力外援，效果显现；缺点是单价偏贵，目前尚非普及型多囊的常规一线药。"
+          }
+        ],
+        harmful: [
+          {
+            name: "轻信网传“纯天然降糖茶/苦瓜素”代替二甲双胍",
+            reason: "此类保健品成分混杂、纯度过低，降糖机制无法被严格和大量的医学临床证实，盲目使用不仅治不好胰岛素抵抗，还极有可能因为掺加了隐形违禁西药而引发严重肝中毒。"
+          },
+          {
+            name: "过度偏激节食 + 爆裂式剧烈运动",
+            reason: "过大热量缺口会拉断大脑神经的警戒线，触发‘饥荒机制’，导致丘脑下部促性腺激素释放停摆。在原本多囊的基础上，又叠加了‘下丘脑性继发闭经’，雪上加霜。"
+          },
+          {
+            name: "盲目因害怕“伤肝肾”而中途停用二甲双胍",
+            reason: "这是一个流传极广的谣言。二甲双胍不经过肝脏代谢，且在体内不产生复杂的副产物，完全是以最初的原始姿态通过肾脏完整过滤排泄，只要您肾功能正常，根本不伤肝肾，擅自停药会让您的血糖与雄激素指标瞬间反弹失控。"
+          }
+        ]
+      },
+      "1.3": {
+        id: "1.3",
+        title: "激素失衡/高雄表现型 (正常血糖+体重正常)",
+        firstLine: [
+          {
+            name: "复方口服避孕药 (COC) 一线首选",
+            metaphor: "对于体重正常、没有血糖后顾之忧的‘瘦多囊’，调理的核心全在‘内平衡’。COC此时是绝对的‘黄金总调度’。它不需要顾忌超重脂肪的干扰，可以直接高效阻断卵巢雄激素的溢出，迅速扑灭脸上脓包和多余毛发的火，并将您的月经控制得极为精确，从而免去因月经长期缺勤带来的焦虑。"
+          }
+        ],
+        secondLine: [
+          {
+            name: "螺内酯 (痤疮、毛发重时联用)",
+            metaphor: "如果雄激素引起的顽固痘痘或毛发比较猖獗，医生可能会为您开出 COC 联合螺内酯的‘合围方案’。二者一个在大脑和卵巢端‘关阀门’，一个在末梢毛囊端‘架大盾牌’，双管齐下让皮肤重归细腻光滑。"
+          },
+          {
+            name: "抗雄性饮食结构 (高膳食纤维 + 低GI)",
+            metaphor: "虽然您身材好、没有发胖困扰，但健康的低GI（慢升糖）和低糖饮食依然像一股‘清凉温润之泉’。它可以避免餐后血管里出现血糖的猛烈颠簸，从而让雄激素水平在日常温和的源头上多一层保护伞。"
+          }
+        ],
+        harmful: [
+          {
+            name: "滥用二甲双胍来辅助减肥",
+            reason: "在既没有超重也完全没有胰岛素抵抗的高清水准下，服用二甲双胍不仅起不到任何额外的降重作用，反而由于缺乏靶点，极易把您的肠道黏膜全面干扰，产生强烈的恶心、剧烈腹泻、甚至浑身虚弱无力。"
+          },
+          {
+            name: "一厢情愿认为“瘦多囊根本不用治疗，等胖了再说”",
+            reason: "极为危险的想法！即使人不胖，卵泡不能正常排出也会导致孕激素不足、子宫内膜长期无孕激素保护，这依然在像雪球一样积累生长。如果长达数月不来月经，同样存在子宫内膜增生甚至非典型病变风险。"
+          }
+        ]
+      },
+      "1.4": {
+        id: "1.4",
+        title: "隐性代谢/高雄表现型 (血糖异常+体重正常)",
+        firstLine: [
+          {
+            name: "复方口服避孕药 (COC)",
+            metaphor: "作为您调理周期的‘外源性指挥军’。由于您不胖，COC能轻松切入发挥降雄大功。但因为隐匿血糖异常的存在，使用间歇期需要听从医生的化验回访，温和辅助调节。"
+          },
+          {
+            name: "二甲双胍 (瘦型胰岛素抵抗之特效救星)",
+            metaphor: "不要以为胰岛素抵抗是胖人的专利，大批不胖的多囊人体内其实正进行着一场‘瘦型内隐抵抗战’。对您而言，二甲双胍并非为了‘减肥’，它专门去修补不胖身体内的葡萄糖转运通道，避免高胰岛素慢性侵袭并灼伤您娇弱的血管和卵子，帮您铲除体内的低度慢性炎性源。"
+          }
+        ],
+        secondLine: [
+          {
+            name: "特定饮食结构调整 (非针对减重的增肌减脂营养)",
+            metaphor: "您绝对不能采用粗暴的空腹和节食！相反，您更需要的是‘加餐式高蛋白低碳水’和‘温柔的力量训练’。这就像是用结实健康的‘肌肉熔炉’去顶替原本虚飘飘 of 低脂肪存量，让肌肉自动帮忙吸纳排泄血糖，达到根源性改善胰岛素阻抗的目的。"
+          },
+          {
+            name: "肌醇调理辅助",
+            metaphor: "肌醇虽然目前医学界证据级别尚未处于核心高位，但在不胖且有IR表现的多囊中，部分研究提示它可以作为‘微小辅助缓冲器’，在细胞内部传送一些温柔的营养信号，您可以将其作为日常无害的辅助补充剂。"
+          }
+        ],
+        harmful: [
+          {
+            name: "武断盲目地判定“我不胖，绝对没有任何血糖问题”",
+            reason: "瘦多囊中有高达30%以上的人群存在‘隐匿性胰岛素抵抗’（外人看起来极瘦，但内脏包覆脂肪过多或肌肉利用糖分极差）。盲目不测血糖，会因体检漏项而遗漏最好的心血管早期干预时机。"
+          },
+          {
+            name: "擅自服用磺脲类‘强力促泌’降糖药",
+            reason: "如果直接使用盲目刺激胰腺分泌胰岛素的降糖药（如格列美脲），会导致在原本就已经爆表的胰岛素血液中再次倾泻大量胰岛素。过高的胰岛素会变本加厉强力逼迫卵巢合成惊人的雄激素，导致痤疮、多毛、闭经全面恶化。"
+          }
+        ]
+      },
+      "2.1": {
+        id: "2.1",
+        title: "生殖储备/促排型 (正常血糖+超重肥胖)",
+        firstLine: [
+          {
+            name: "生活方式干预 (孕前排卵的核物理基石)",
+            metaphor: "对于备孕肥胖妈妈，生活方式管理具有核能威力！科学减去原体重的 5%-10%，其效果胜过任何灵丹妙药——研究证实，仅靠温和健康的体脂减低，就能让高达 80% 的肥胖多囊患者‘自然恢复排卵、在没有促排药的帮助下怀孕’！这等于是给受孕的卵巢生态圈进行了一次雨水丰沛的‘春播大整理’。"
+          },
+          {
+            name: "来曲唑 (促排卵一线绝对金标准)",
+            metaphor: "来曲唑专为备孕妈妈精准打造的‘单动力排卵助推器’。它通过短暂不留痕迹地蒙住大脑感觉雌激素的雷达，刺激脑垂体产出高纯度的促卵泡素（FSH）。它的最大奇功是‘指派一名最优秀的单兵（单卵泡）出征’，极好地规避了怀上极度危险的双胞胎或多胞胎风险；且它对子宫内膜这块‘育儿土壤’的厚度毫无打压，深受专家推崇。"
+          }
+        ],
+        secondLine: [
+          {
+            name: "克罗米芬 (二线促排药物)",
+            metaphor: "如果来曲唑在您身上出现耐药或无法获取，克罗米芬就是强力的‘第二备用推手’。但需要警惕的是，它是一个在卵巢发力后对子宫内膜有些‘缩水打压’的药，经常容易让胚胎着床的垫子变薄。"
+          },
+          {
+            name: "二甲双胍 (孕前3个月安全启用)",
+            metaphor: "即使现在血糖正常，但由于身材肥胖，孕前3个月坚持服用二甲双胍可以当做‘卵子外壳抗氧抛光器’。它能保护正在分裂的娇柔卵泡不被身体肥胖多余的炎性物质侵染，能够提高卵子质量，从而间接减少早期的孕期流产概率。"
+          }
+        ],
+        harmful: [
+          {
+            name: "被忽悠直接去做“腹腔镜下卵巢打孔手术”催熟",
+            reason: "这是极其过时、几乎快被淘汰的高危手段。在没有充分尝试来曲唑等口服无创促排前，贸然手术打孔，只要操作医生手法稍有不当，就会造成不可逆转的‘卵巢储备早衰’或盆腔终身大粘连，得不偿失。"
+          },
+          {
+            name: "私自在网上找微商购买来曲唑、在家自行服用",
+            reason: "万分危险！促排卵是一门极其严密的临床艺术。如果没有通过超声实时‘看雷达’监测卵泡的大小 and 个数，擅自服药极易让卵巢极速肿大（OHSS），甚至数十个卵泡同时爆发导致卵巢破裂，危及生命。"
+          }
+        ]
+      },
+      "2.2": {
+        id: "2.2",
+        title: "生殖储备/代谢代谢型 (血糖异常+超重肥胖)",
+        firstLine: [
+          {
+            name: "生活方式干预 (控制血糖与重塑孕育温床)",
+            metaphor: "这是不得不做的黄金天条！在超重伴血糖異常的情况下，必须通过合理的饮食、控糖、运动将身体的恶劣高糖大环境清空排毒，否则受孕无异于把娇弱的种子撒在滚烫的开水里。"
+          },
+          {
+            name: "二甲双胍 (备孕期强烈推荐，可服用至怀孕早期)",
+            metaphor: "二甲双胍对您来说是真正的‘孕期生命保护伞’。高糖血液极具毒性，会重度拉低卵泡的纯度，还会使未来胚胎着床时的子宫内膜充满炎症因子。二甲双胍将这层高糖警报快速解除，不仅给幼小的卵泡擦洗出光洁外皮，而且临床证实：它可以安全使用到孕早期，极大程度预防孕期妊娠期糖尿病爆发。"
+          },
+          {
+            name: "来曲唑 (稳糖之后的一线首选促排)",
+            metaphor: "待您和医生一起，用二甲双胍和饮食调理把血糖和餐后胰岛素指标拉回平稳期后，来曲唑便这台‘卵子火箭发射大推力器’就可以安全点火，轻松唤醒优势卵泡，顺利冲破排卵关隘。"
+          }
+        ],
+        secondLine: [
+          {
+            name: "二甲双胍与来曲唑联合序贯机制",
+            metaphor: "若您单用来曲唑对卵巢呼唤不起作用，二者联合就像是‘金钥匙与大火箭的双向配合’。二甲双胍先清理掉卵巢外层坚固的糖化外壳屏障（降低雄激素和IR），来曲唑大火箭紧接着点火，效果显著。"
+          },
+          {
+            name: "阿卡波糖 (控制餐后餐食碳水波动)",
+            metaphor: "阿卡波糖像一个‘肠道食物分解酶的温柔刹车闸’。它能在您备孕吃主食时，让身体吸收淀粉的速度变慢，把高耸陡峭的胰岛素上升悬崖调节为和煦的下缓丘陵，全力防堵餐后胰岛素大飙车而间接破坏卵子成长环境。"
+          }
+        ],
+        harmful: [
+          {
+            name: "不控制血糖、不吃任何降糖药，直接打排卵针或仓促怀孕",
+            reason: "极度缺乏科学根据的行为！在胰岛素抵抗未加收拾的高血糖、高胰岛素环境下直接促排或受孕，胚胎无异于在炎性废墟中求生存，孕妇极易发生胚胎停育、流产，妊娠糖尿病概率爆发数倍。"
+          },
+          {
+            name: "封建迷信“促排卵药打多了，会提前把一辈子的卵泡透支干、导致早衰”",
+            reason: "这是完全没有生理学根据的恐慌。女性每个月本身就会有数百个落后预备卵泡，哪怕不促排也默默闭锁凋亡。医生促排只是用药救活一颗本该‘自生自灭’的落后卵泡，绝对没有消耗您未来存量库的老本，尽可安心。"
+          }
+        ]
+      },
+      "2.3": {
+        id: "2.3",
+        title: "生殖储备/纯促排型 (正常血糖+体重正常)",
+        firstLine: [
+          {
+            name: "来曲唑 (一线经典首选诱导排卵)",
+            metaphor: "对于极不发胖、血糖健康的瘦型备孕多囊，您最缺的仅仅是临门一脚。来曲唑这时候是名不虚传的‘春风和煦大推手’。它不需要跟脂肪、血糖斗智斗勇，可以直接、高灵敏地精准促成一颗优势卵。几乎不需要任何复杂干预就能帮您轻松当上妈妈。"
+          }
+        ],
+        secondLine: [
+          {
+            name: "克罗米芬 (二线促排)",
+            metaphor: "如果在某些医院来曲唑临时不可用，克罗米芬同样可以在这等清爽体质下担任合格替补。只需注意后期用超声回访下内膜厚度即可。"
+          },
+          {
+            name: "促性腺激素注射 (重组FSH/尿促)",
+            metaphor: "if 口服药均不奏效，促性腺激素注射作为外源性直喷养料，不拐弯抹角。由于此疗法劲头过大，医生必须通过超声像雷达一般精准监测卵泡个数，严防多胎或卵巢过度刺激。"
+          }
+        ],
+        harmful: [
+          {
+            name: "大肆购买“紫河车、鹿胎膏、胎盘制剂”大补特补",
+            reason: "这是灾难性的行为！这些所谓含有极大天然动物雌激素的进补秘方，成分和纯度根本无法控制。大口吃下会导致外源性激素大轰炸，彻底引爆您脆弱的反馈系统，让卵巢爆发大囊肿，直接把排卵出路堵死。"
+          },
+          {
+            name: "因觉得体重标准，不做任何促排辅助就咬牙贷款直接选择做“试管婴儿”",
+            reason: "这是典型的‘高射炮打蚊子’。瘦多囊卵巢对口服来曲唑的灵敏度极好。应当先在门诊接受低成本、无创的来曲唑口服排卵监测、自然同房或人授指导。直接跨步做试管不仅开销巨大，还要冒着瘦子最易患的‘卵巢过度刺激综合征（OHSS）’风险。"
+          }
+        ]
+      },
+      "2.4": {
+        id: "2.4",
+        title: "生殖储备/隐代质量型 (血糖异常+体重正常)",
+        firstLine: [
+          {
+            name: "二甲双胍 (瘦多囊低度代偿性卵泡抛光者)",
+            metaphor: "对于体重正常但有血糖异常的妈妈，您的多囊核心原因往往是深藏不露的‘卵巢微环境低度发炎和高糖基化’。二甲双胍在此处最根本的任务是扮演一个‘小卵泡去毒增光抛光机’。它能清扫飘在娇柔小卵泡周围的恶性炎性分子，让未来的胚胎在健康不带糖毒的血液中着床，极大减少流产风险。"
+          },
+          {
+            name: "来曲唑 (一线促排大招)",
+            metaphor: "在二甲双胍和温抗糖餐将内里的细胞微坏境打理整洁之后，来曲唑出马，轻轻一下便能顺风顺水地促排出一枚具有强大生殖潜力的优质、圆润大卵泡。"
+          }
+        ],
+        secondLine: [
+          {
+            name: "辅酶Q10 联合 维生素D (中等辅助调节机能)",
+            metaphor: "辅酶Q10就像是塞进卵泡内部主力能量工厂（线粒体）的一盒‘超级充电宝’，强力对抗卵巢低度发炎造成的细胞能量衰变，而维生素D在瘦型IR多囊中起着‘土壤调节剂’的多效配合，共同提升卵泡孕育环境，安全无副反应。"
+          },
+          {
+            name: "低GI饮食联合二甲双胍调护",
+            metaphor: "即便您不超重，依然要建立‘慢糖防御网络’。这犹如给未来小生命的受精卵着床垫，铺设了一层最丝滑柔软、不带血糖毛刺的‘心血管微循环床垫’。"
+          }
+        ],
+        harmful: [
+          {
+            name: "只在B超排卵期的那两三天吃二甲双胍，平时偷懒一停了之",
+            reason: "这是毫无药理逻辑的。胰岛素抵抗改善绝对不可能像退烧药那样吃一粒就退。它必须依靠长期、稳定、饱满的组织浓度积累，才能渐渐校准被毁坏的细胞通道锁扣。"
+          },
+          {
+            name: "盲信“某神奇纯中药促卵偏方，可以百分百替代西药来曲唑”",
+            reason: "口服纯来曲唑在医学双盲中有着极高的排卵支持率。盲信夸大宣传的催熟偏方，极易因为有些偏方偷藏了大剂量激素导致内膜大出血，延误黄金受孕期。"
+          }
+        ]
+      },
+      "3.1": {
+        id: "3.1",
+        title: "胰岛防线/代谢逆转型 (血糖异常+超重肥胖)",
+        firstLine: [
+          {
+            name: "生活方式干预 (逆转胰岛素抵抗之灵魂基石)",
+            metaphor: "您现在的胰岛系统就像是陷入雪地里疯狂空转也踩不动离合的卡车车轮：越踩，负荷越高，胰岛素飙得越快。生活方式干预就像是在轮子底下塞一卷防滑草（限制高糖餐、引入阻力运动）。通过移走卡在胰岛素锁眼里油腻的脂肪分子，才能从根本解除警报，免于走向糖尿病、心脑血管慢性病深渊。"
+          },
+          {
+            name: "二甲双胍 (最大耐受剂量的一线主力卫士)",
+            metaphor: "在此类代谢警报高挂的类型中，二甲双胍是您最可信任的‘血糖搬运大队长’。它不仅是打开细胞大门把糖分烧掉的钥匙，它还有个大大的妙处：可以抑制您肚里小肠对葡萄糖的过度饥渴吸收，并防止肝脏在夜间偷偷熬糖排进血管，对肥胖控重 and 逆转胰岛素抵抗大有裨益。"
+          }
+        ],
+        secondLine: [
+          {
+            name: "噻唑烷二酮类 (如吡格列酮)",
+            metaphor: "二线抗IR的‘超能重装清道夫’。它可以把散落在血液中容易引起发炎的血脂和多余蔗糖，打包捆成稳定的小脂肪包并隐秘，降低敏感红线。需警惕短暂引起水钠潴留。"
+          },
+          {
+            name: "GLP-1受体激动剂",
+            metaphor: "它是一个极度强大的‘中枢控食与肝糖拦截双向处理器’。它不仅给您的大脑播放柔和悦耳的‘本餐已饱’白噪音，让您瞬间断绝狂躁暴食的欲望，还深度帮助调动肌肉代谢热量。"
+          }
+        ],
+        harmful: [
+          {
+            name: "豪掷几万买来宣称“能彻底逆转糖尿病和多囊”的高科技磁疗裤或微商特效降糖食品",
+            reason: "世界上压根不存在能够‘一吃就一劳永逸治疗抵抗’的灵丹妙药。胰岛素抵抗是一个由肌肉量、饮食比例和体脂厚度共同结成的网络。盲目相信商家虚假的神话，只会把最珍贵的降糖黄金逆转期彻底败光。"
+          },
+          {
+            name: "长期、偏激、彻底断绝碳水的“极度生酮饮食”",
+            reason: "这是一种极其饮鸩止渴的偏方。多囊状态下长期生酮，会引发机体酸中毒，并且会让您的性激素合成链完全熔断、直接导致下丘脑性闭经。"
+          }
+        ]
+      },
+      "3.2": {
+        id: "3.2",
+        title: "血糖安全/孕产代谢防护 (血糖异常+有备孕)",
+        firstLine: [
+          {
+            name: "生活方式干预 (孕前防脱轨的主动阻拦盾)",
+            metaphor: "在备孕阶段若能通过控制饮食和体力管理，主动把多余的内脏体脂降下一部分，不仅能极大削弱大体胖给卵巢带来的高雄气压，更是未来保胎、预防妊娠期糖尿病和妊高症的生命阶梯。"
+          },
+          {
+            name: "二甲双胍 (孕前及整个孕早期守护神)",
+            metaphor: "二甲双胍在此处化身为‘早期妊娠期糖毒解毒大使’。它会像厚重大衣一般贯穿备孕全程：在怀上之前帮您清扫卵子成长路上的高糖，让卵子发育成壮实的卵泡；生下来早期，它能极大程度抵挡由于孕酮大涨带来的继发性胰岛素敏感度崩塌，防备胎停，一路护送着胚胎站稳脚跟。"
+          },
+          {
+            name: "来曲唑 (促排一线)",
+            metaphor: "当您在二甲双胍的大棒子护航下将血糖数值成功拦截回安稳警戒区后，由医生配合来曲唑这一台‘精确排卵促卵机’，就可以安全点火升空发芽。"
+          }
+        ],
+        secondLine: [
+          {
+            name: "二甲双胍联合肌醇治疗",
+            metaphor: "极低副作用的双轮增敏组合。部分双盲研究指出：二甲双胍（黄金大钥匙）配合肌醇这个‘信使小门房’，对超重肥胖且伴糖耐量损伤的孕妈妈卵泡活性有很好的联合激发功能。"
+          },
+          {
+            name: "阿卡波糖 (控制正餐多主食血糖波动)",
+            metaphor: "阿卡波糖是一块肠腔底部的‘精制糖拦截海绵’。它能在您备孕吃主食时，将碳水的释糖速度稳稳按在慢动作序列，是极受临床青睐的中低风险控糖搭档。"
+          }
+        ],
+        harmful: [
+          {
+            name: "以“是药三分毒，我在全力备孕”为借口，擅自停掉二甲双胍等所有控糖药，纯靠意念挨饿",
+            reason: "这是极其盲目且具有极高流产隐患的做法！血糖和胰岛素数值无药压制就会爆涨，胚胎无异于在极高糖毒性的恶劣温床里成长，早期胚胎停育和胎儿中枢神经早期畸形发生的几率会增加数倍。"
+          }
+        ]
+      },
+      "3.3": {
+        id: "3.3",
+        title: "细胞觉醒/瘦型IR突破 (正常体重+血糖异常)",
+        firstLine: [
+          {
+            name: "二甲双胍 (骨骼肌细胞敏感度拯救者，非用于减肥)",
+            metaphor: "二甲双胍在此处的主要功能绝对不是用来帮助减脂除肉的，它的真正面目是一台‘肌肉葡萄糖活性修复发动机’。它跑去把您体内肌肉、骨骼和肝脏上生了锈、对胰岛素信号冷淡的靶细胞通道锁眼温柔润滑，让糖分得以输入细胞。一旦高胰岛素下落，长在脖子、腋下的‘黑棘皮’脏斑就会渐渐退减，皮肤重塑娇嫩。"
+          },
+          {
+            name: "科学慢糖结构餐 (高蛋白质 + 低GI + 抗炎成分)",
+            metaphor: "您绝对不需要跟超重的人那样狂减能量！因为您不发胖，您需要保持充足热量，但要把主食全方位换成黑米、糙米、燕麦、粗豆等慢卡糖，配以丰满的多样蛋白，给身体筑起一堵慢释糖防火墙。"
+          }
+        ],
+        secondLine: [
+          {
+            name: "力量肌肉负荷训练 (瘦多囊逆转的灵魂开关)",
+            metaphor: "通过针对大腿、臀部的阻力负荷训练，可以在体内凭空增加宝贵的‘储存糖分的肌肉蓄水池’，让细胞里的转运蛋白活跃起来，就像是让肌肉自动张开嘴吞掉血糖，是不用药的第二重自然增敏大法。"
+          }
+        ],
+        harmful: [
+          {
+            name: "自我麻痹并理直气壮确信：“我这么苗条，绝不可能会有胰岛素抵抗，吃二甲双胍一定会低血糖昏过去”",
+            reason: "极具危害的误解。二甲双胍是‘增敏器’，不催促胰岛素过度分泌，在普通血糖未达到糖尿病级别时服用，它几乎完全不会触发低血糖晕厥，切勿因盲目排斥而贻误逆转最佳时机。"
+          }
+        ]
+      },
+      "3.4": {
+        id: "3.4",
+        title: "隐性代谢/备孕卵巢护卫 (血糖异常+有备孕)",
+        firstLine: [
+          {
+            name: "二甲双胍 (孕前至少 3 个月的金牌着床垫精修专家)",
+            metaphor: "对于标准体重但有隐匿血糖异常、又在焦虑备孕的您，二甲双胍会在您正式受精前3个月，勤勤恳恳对孕育胚胎的子宫内膜微血管和发炎因子进行精密扫除，在卵子出征前充当防护盾，确保优质排卵，并最大限度阻绝意外流产。"
+          },
+          {
+            name: "来曲唑 (一线促排助推黄金动力)",
+            metaphor: "当二甲双胍金牌修护将子宫床垫跟卵巢小生态圈擦洗一空、让内部环境充满安全信号后，由医生点火开出这台‘来曲唑促卵火箭’。一次轻盈推举，便能轻松诞生一枚一流大优质卵泡。"
+          }
+        ],
+        secondLine: [
+          {
+            name: "补充活性高纯度 维生素D",
+            metaphor: "瘦多囊中相当庞大的人口拥有极重的维D缺乏。维生素D就像是人体内的‘内分泌修补剂’。补足维D好比是在荒漠枯土上洒下了细密温热的甘霖。"
+          },
+          {
+            name: "辅酶Q10 优质抗氧化清道夫",
+            metaphor: "它是一个在卵子核心能量厂（线粒体）巡逻的‘抗氧化卫士’，竭力清除身体由于糖毒产生的自由基，给即将排出的优质卵子提供细胞动力。"
+          }
+        ],
+        harmful: [
+          {
+            name: "抗拒医生一线处方药，盲目花大价钱购买“国外天然多囊植物素”",
+            reason: "此类海淘植物素不仅生殖和胚胎安全性完全没有临床双盲验证，反而容易因为加重肝肾代谢和排毒负担，给备孕女性造成不可承受之痛。"
+          },
+          {
+            name: "固执笃信：“只要吃药促排卵，期间可乐炸鸡高糖饮食照吃不误也照样能生出大胖小子”",
+            reason: "致命大错。促排卵只是吹哨起跑，但卵泡本身到底能不能吸纳好营养，完全取决于那一刻血管里血液中的糖浓度、胰岛激素负荷。高糖饮食会导致卵泡表面被‘糖化硬壳’裹死，受精着床生命力极为低弱。"
+          }
+        ]
+      }
+    };
+
+    // Dictionary of clinical terms
+    const clinicalDictionary = {
+      hpgh: {
+        title: "下丘脑-垂体-卵巢轴 (HPG Axis)",
+        desc: "HPG轴是女性身体内部指挥月经和排卵的‘中央司令部三级连锁传导线’。下丘脑发出宏观指令，垂体像哨兵一样拉响促黄体生成素(LH)和促卵泡素(FSH)的激素风箱，指引卵巢生产卵子与雌孕激素。多囊状态下，这一链条的传导频率完全被打乱，垂体狂呼乱叫分泌过量的LH（雄激素根源），导致卵巢无所适从、卵泡只能停滞在幼稚阶段。"
+      },
+      ir: {
+        title: "胰岛素抵抗 (Insulin Resistance / IR)",
+        desc: "指身体细胞的‘糖大门’对胰岛素钥匙不敏感。胰腺为了把血糖塞进细胞，不得不爆肝生产高达平时数倍的胰岛素。高浓度的胰岛素在血液中横冲直撞，跑去‘附带伤害’卵巢，并劫持了性激素结合球蛋白。这就诱发卵巢过度合成高额的雄激素。因此，降糖、增敏，是釜底抽薪解决多囊多毛、肥胖和恢复月经的核心密钥。"
+      },
+      coc: {
+        title: "复方口服避孕药 (COC) 治疗多囊的生理学逻辑",
+        desc: "避孕药并非只是用于避孕，它在多囊治疗中更像是一个‘重置系统大调度’。1. 避孕药所含的强力孕激素能高效反向压制大脑中枢的垂体，关死狂躁释放雄激素的阀门；2. 抢占雄激素受体，保护毛囊和皮脂腺免受痤疮多毛折腾；3. 每月一次规律发出撤退信号，帮内膜安全剥脱，避免由于几个月不来月经导致子宫内膜疯狂过长甚至癌变。"
+      }
+    };
+
+    // Common clinical FAQ answers
+    const faqsData = [
+      {
+        question: "1. 多囊卵巢综合征 (PCOS) 能被彻底根治吗？为什么会得这个病？",
+        answer: "从基因和病理角度，PCOS具有很强的遗传背景和基因多态性，目前在医学界尚无法被‘一劳永逸像感冒一样根治’。但是，通过系统科学的饮食慢糖、体脂管理配合一线对症药物（如避孕药、二甲双胍、促排药），多囊的‘所有症状都可以完全退化并完美逆转’。只要做好健康规划，您不仅能像普通人一样拥有婴儿般光滑的皮肤、准时如电子钟般的月经，也完全能顺利怀孕诞生极为聪明的健康宝宝。",
+        open: false
+      },
+      {
+        question: "2. 多囊避孕药（达英-35/优思明）需要吃多久？会不会产生依赖性？",
+        answer: "避孕药一般建议3-6个周期起步。避孕药对卵巢的作用是‘强制放假休息’，它不参与卵巢组织细胞的基因改变，不存在上瘾或所谓的依赖性。停药后如果月经再次延迟，并非由于避孕药，而是您卵巢本身的‘自主发育机能’依然被体脂肥胖、慢性炎症、或高胰岛素抵抗卡住通道。必须联合控制生活方式、低GI抗炎餐才能平稳度过停药期。",
+        open: false
+      },
+      {
+        question: "3. 为什么不胖的“瘦多囊”依然会被医生开吃“糖尿病神药”二甲双胍？",
+        answer: "这是瘦多囊群体极常见的困惑。二甲双胍在多囊治疗中扮演的并非‘减肥降体重药’，而是一台‘细胞葡萄糖利用率发动机’。瘦多囊中高达30%以上的人群存在‘隐匿性胰岛素抵抗’（多余脂肪包在内脏，肌肉转化糖功能极差）。二甲双胍能打通肌肉中的转运通道，让葡萄糖顺利进去被消耗。一旦多余的胰岛素降下来，对卵巢的毒性刺激随之切断，月经自然来潮，腋下脖子的‘黑棘皮’也会快速消退白皙。它是安全的增敏药，在普通血糖正常时服用几乎完全不会引发低血糖晕倒，尽可安心。",
+        open: false
+      },
+      {
+        question: "4. 多囊促排卵药（来曲唑）会透支并消耗女性卵巢存量、导致提前闭经早衰吗？",
+        answer: "完全是荒谬流传的恐慌。女性出生时卵巢里就有几十万颗始基卵泡。每个月，身体都会自然招募数百颗卵泡开始发育，由于没有得到足够的促卵泡素(FSH)，其中仅有一颗能脱颖而出成熟排卵，其余99%的卵泡都会闭锁并‘自行凋亡’。来曲唑促排，只是通过机制‘救活’了那一颗本该默默闭锁、当成垃圾抛弃的卵泡，并没有透支抢夺您未来的老本，更绝不可能导致卵巢早衰，属于安全成熟的备孕一线法。",
+        open: false
+      }
+    ];
+
+    createApp({
+      setup() {
+        const activeStep = ref(1);
+        const answers = ref({
+          concern: '',
+          weight: '',
+          glycemic: '',
+          pregnancy: ''
+        });
+
+        const bmiCalc = ref({
+          height: null,
+          weight: null,
+          bmi: null
+        });
+
+        const termPopup = ref(null);
+        const faqs = ref(faqsData);
+
+        // Core assessment options
+        const concernOptions = [
+          { value: '月经紊乱 / 高雄激素（多毛、痤疮、脱发）', label: '月经不调与多毛痤疮', desc: '经期延迟、稀发、闭经、或伴随顽固下颌痤疮、身体粗硬多毛、脱发' },
+          { value: '正在备孕，渴望健康的宝宝', label: '备孕受孕黄金期', desc: '渴望自然快速受孕，急需扫除因多囊排卵滞阻造成的备孕瓶颈' },
+          { value: '担忧血糖升高、黑棘皮、长胖、暴食或未来慢病问题', label: '血糖代谢与身形管理', desc: '关注暴饮暴食、体重飙升、胰岛素敏感度崩塌、脖子及腋下黑棘皮等慢病调理' }
+        ];
+
+        const glycemicOptions = [
+          { value: '正常 (体检正常)', label: '正常血糖与胰岛功能', desc: '空腹血糖、餐后两小时OGTT、胰岛素释放、糖化血红蛋白等体检指标皆平稳' },
+          { value: '有异常 (确诊胰岛素抵抗/糖耐量异常/高血糖)', label: '有异常或胰岛素抵抗', desc: '已被诊断为胰岛素抵抗(IR)、高胰岛素、糖耐量减低或轻度高血糖、出现黑棘皮' }
+        ];
+
+        const pregnancyOptions = [
+          { value: '无近期备孕计划', label: '无近期备孕战略', desc: '未来6个月至1年内无计划生宝宝，首要任务是规律经期和抗高雄及身材调节' },
+          { value: '有近期备孕计划', label: '有积极近期的备孕大计', desc: '未来1-6个月内急切备孕，首要调理目标是高效排卵、获得最强受精卵质量' }
+        ];
+
+        // Completed fields counter
+        const completedFieldsCount = computed(() => {
+          let count = 0;
+          if (answers.value.concern) count++;
+          if (answers.value.weight) count++;
+          if (answers.value.glycemic) count++;
+          if (answers.value.pregnancy) count++;
+          return count;
+        });
+
+        // Compute step routing
+        const calculateBMI = () => {
+          if (bmiCalc.value.height && bmiCalc.value.weight) {
+            const hMetres = bmiCalc.value.height / 100;
+            const bmiVal = (bmiCalc.value.weight / (hMetres * hMetres)).toFixed(1);
+            bmiCalc.value.bmi = bmiVal;
+            
+            // Auto categorise
+            if (parseFloat(bmiVal) >= 24.0) {
+              answers.value.weight = '超重或肥胖';
+            } else {
+              answers.value.weight = '体重正常（标准或偏瘦）';
+            }
+          } else {
+            bmiCalc.value.bmi = null;
+          }
+        };
+
+        // Matching logic according to 8 core expert profiles
+        const matchedProfile = computed(() => {
+          const c = answers.value.concern;
+          const w = answers.value.weight;
+          const g = answers.value.glycemic;
+          const p = answers.value.pregnancy;
+
+          if (!c || !w || !g || !p) return null;
+
+          // Mapping table logic matching the React applet perfectly
+          if (p === '无近期备孕计划') {
+            if (c === '月经紊乱 / 高雄激素（多毛、痤疮、脱发）') {
+              if (w === '超重或肥胖' && g === '正常 (体检正常)') return pcosDatabase["1.1"];
+              if (w === '超重或肥胖' && g === '有异常 (确诊胰岛素抵抗/糖耐量异常/高血糖)') return pcosDatabase["1.2"];
+              if (w === '体重正常（标准或偏瘦）' && g === '正常 (体检正常)') return pcosDatabase["1.3"];
+              if (w === '体重正常（标准或偏瘦）' && g === '有异常 (确诊胰岛素抵抗/糖耐量异常/高血糖)') return pcosDatabase["1.4"];
+            }
+            if (c === '正在备孕，渴望健康的宝宝') {
+              // Forced redirection since備孕 is selected
+              if (w === '超重或肥胖' && g === '正常 (体检正常)') return pcosDatabase["2.1"];
+              if (w === '超重或肥胖' && g === '有异常 (确诊胰岛素抵抗/糖耐量异常/高血糖)') return pcosDatabase["2.2"];
+              if (w === '体重正常（标准或偏瘦）' && g === '正常 (体检正常)') return pcosDatabase["2.3"];
+              if (w === '体重正常（标准或偏瘦）' && g === '有异常 (确诊胰岛素抵抗/糖耐量异常/高血糖)') return pcosDatabase["2.4"];
+            }
+            if (c === '担忧血糖升高、黑棘皮、长胖、暴食或未来慢病问题') {
+              if (w === '超重或肥胖') return pcosDatabase["3.1"];
+              if (w === '体重正常（标准或偏瘦）') return pcosDatabase["3.3"];
+            }
+          } else if (p === '有近期备孕计划') {
+            if (c === '担忧血糖升高、黑棘皮、长胖、暴食或未来慢病问题') {
+              if (w === '超重或肥胖') return pcosDatabase["3.2"];
+              if (w === '体重正常（标准或偏瘦）') return pcosDatabase["3.4"];
+            }
+            // General pregnancy profiles
+            if (w === '超重或肥胖' && g === '正常 (体检正常)') return pcosDatabase["2.1"];
+            if (w === '超重或肥胖' && g === '有异常 (确诊胰岛素抵抗/糖耐量异常/高血糖)') return pcosDatabase["2.2"];
+            if (w === '体重正常（标准或偏瘦）' && g === '正常 (体检正常)') return pcosDatabase["2.3"];
+            if (w === '体重正常（标准或偏瘦）' && g === '有异常 (确诊胰岛素抵抗/糖耐量异常/高血糖)') return pcosDatabase["2.4"];
+          }
+
+          // Fallback matching
+          if (w === '超重或肥胖') {
+            return g === '正常 (体检正常)' ? pcosDatabase["1.1"] : pcosDatabase["1.2"];
+          } else {
+            return g === '正常 (体检正常)' ? pcosDatabase["1.3"] : pcosDatabase["1.4"];
+          }
+        });
+
+        // Helper navigation functions
+        const nextStep = () => {
+          if (activeStep.value < 4) {
+            activeStep.value++;
+          } else {
+            scrollToResult();
+          }
+        };
+
+        const prevStep = () => {
+          if (activeStep.value > 1) {
+            activeStep.value--;
+          }
+        };
+
+        const scrollToResult = () => {
+          setTimeout(() => {
+            const el = document.getElementById('result-section');
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth' });
+            }
+          }, 100);
+        };
+
+        const showTerm = (termId) => {
+          termPopup.value = clinicalDictionary[termId];
+        };
+
+        // When goal redirects to active pregnancy plan, auto-update
+        watch(() => answers.value.concern, (newConcern) => {
+          if (newConcern === '正在备孕，渴望健康的宝宝') {
+            answers.value.pregnancy = '有近期备孕计划';
+          }
+        });
+
+        return {
+          activeStep,
+          answers,
+          bmiCalc,
+          completedFieldsCount,
+          concernOptions,
+          glycemicOptions,
+          pregnancyOptions,
+          matchedProfile,
+          calculateBMI,
+          nextStep,
+          prevStep,
+          scrollToResult,
+          showTerm,
+          termPopup,
+          faqs
+        };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
